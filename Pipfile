@@ -9,6 +9,9 @@ djangorestframework = "*"
 pillow = "*"
 celery = "*"
 redis = "*"
+python-dotenv = "*"
+dj-database-url = "*"
+django-celery-results = "*"
 
 [dev-packages]
 

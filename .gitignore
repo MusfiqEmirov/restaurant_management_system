@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+
+# Env
+.env
+
+# Django Migrations
+**/migrations/
+!**/migrations/__init__.py
+
+# VSCode
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
