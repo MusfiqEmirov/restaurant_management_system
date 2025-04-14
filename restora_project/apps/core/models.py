@@ -2,13 +2,10 @@ from time import timezone
 from django.db import models
 from django.contrib.auth import get_user_model
 
+from apps.core.mixins import TimestampMixin
+User = get_user_model()
 
-class TimestampMixin(models.Model): # diger modellerde vaxt fieldi yazmag evezine burdan miras alacaq
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        abstract = True # modelin abstract oldugunu gosterir
 
 
 #qeydleri silmek evezine bazada saxlayir
@@ -34,7 +31,7 @@ class SoftDeleteMixin(models.Model):
 
 # admin ve iscilerin fealiyetini izlemek ucun
 class AuditMixin(models.Model):
-    created_by = models.ForeignKey(get_user_model,
+    created_by = models.ForeignKey(User,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

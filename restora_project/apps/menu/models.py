@@ -1,10 +1,10 @@
 from django.db import models
 
-from apps.core.models import TimestampMixin
+from apps.core.mixins import TimestampMixin
 
 
 class Category(TimestampMixin):
-    name = models.CharField(max_lenght=100, unique=True) # yalniz category adi
+    name = models.CharField(max_length=100, unique=True) # yalniz category adi
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
