@@ -6,8 +6,6 @@ from apps.core.mixins import TimestampMixin
 User = get_user_model()
 
 
-
-
 #qeydleri silmek evezine bazada saxlayir
 class SoftDeleteMixin(models.Model):
     # qeydin silinib silmediyini
@@ -29,6 +27,7 @@ class SoftDeleteMixin(models.Model):
     class Meta:
         abstract = True
 
+
 # admin ve iscilerin fealiyetini izlemek ucun
 class AuditMixin(models.Model):
     created_by = models.ForeignKey(User,
@@ -47,4 +46,6 @@ class AuditMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
 
