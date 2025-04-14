@@ -11,19 +11,28 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+import dj_database_url
 
+# print("DATABASE:", dj_database_url.config())
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # restaurant_management_system qovluğuna gedir
+load_dotenv(BASE_DIR / '.env')
+
+# Django ayarları
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vs+5&e@us8&rsk1z39(3nd9y)g2_eqcsey_#s)_3j1*82utsi-'
+# SECRET_KEY = 'django-insecure-vs+5&e@us8&rsk1z39(3nd9y)g2_eqcsey_#s)_3j1*82utsi-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -39,13 +48,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #apps
+    'apps.customers',
     'apps.core',
     'apps.orders',
     'apps.accounts',
     'apps.menu',
     'apps.notifications',
     'apps.staff',
-    'apps.admin_panel',
 
     # library
     'rest_framework',
@@ -87,10 +96,7 @@ WSGI_APPLICATION = 'restora_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'))
 }
 
 
@@ -134,3 +140,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#sendmail setting
+
+# Email ayarları
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CELERY_BROKER_URL='redis://redis:6379/0'
