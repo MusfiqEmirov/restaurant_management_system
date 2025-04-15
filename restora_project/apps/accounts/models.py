@@ -15,7 +15,7 @@ class User(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
 
-from apps.core.models import TimestampMixin    
+from apps.core.mixins import TimestampMixin    
     
 
 class Profile(TimestampMixin):

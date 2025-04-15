@@ -1,8 +1,7 @@
-from time import timezone
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from apps.core.mixins import TimestampMixin
 User = get_user_model()
 
 
@@ -47,5 +46,12 @@ class AuditMixin(models.Model):
     class Meta:
         abstract = True
 
+
+
+class DummyModel(SoftDeleteMixin, AuditMixin):
+    name = models.CharField(max_length=100)
+
+    class Meta:
+        app_label = 'core'  
 
 
