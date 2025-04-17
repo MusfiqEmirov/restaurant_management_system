@@ -1,8 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
-from apps.core.models import DummyModel
-
 User = get_user_model()
 
 
