@@ -10,8 +10,12 @@ pillow = "*"
 celery = "*"
 redis = "*"
 python-dotenv = "*"
-dj-database-url = "*"
 django-celery-results = "*"
+elasticsearch = "*"
+dj-database-url = "*"
+django-elasticsearch-dsl = "*"
+psycopg2 = "*"
+gunicorn = "*"
 
 [dev-packages]
 

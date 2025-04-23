@@ -13,17 +13,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import dj_database_url
-
-# print("DATABASE:", dj_database_url.config())
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent  # restaurant_management_system qovluğuna gedir
-load_dotenv(BASE_DIR / '.env')
+BASE_DIR = Path(__file__).resolve().parent.parent  # Bu, layihənin kök qovluğuna işarə edir
+load_dotenv(BASE_DIR / '.env')  # .env faylını yükləyi
 
 # Django ayarları
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -34,8 +29,10 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'your-domain.com']
 
+# Nginx proxy üçün:
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
@@ -48,19 +45,40 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #apps
-    'apps.customers',
-    'apps.core',
-    'apps.orders',
-    'apps.accounts',
-    'apps.menu',
-    'apps.notifications',
-    'apps.staff',
+    'project_apps.customers',
+    'project_apps.core',
+    'project_apps.orders',
+    'project_apps.accounts',
+    'project_apps.menu',
+    'project_apps.notifications',
+    'project_apps.staff',
 
     # library
     'rest_framework',
     'django_celery_results',
+    'django_elasticsearch_dsl',
 
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://elasticsearch:9200'
+    },
+}
+
+AUTH_USER_MODEL = 'accounts.User' # standart user evezineUser modelini istafadeni bildiri
+
+# Verilənlər bazası (PostgreSQL Docker üçün)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'restaurant_db'),
+        'USER': os.getenv('POSTGRES_USER', 'user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'postgres'),
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,9 +91,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'restora_project.urls'
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'restora_project' / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 TEMPLATES = [
     {
@@ -98,11 +122,8 @@ WSGI_APPLICATION = 'restora_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'))
-}
 
-AUTH_USER_MODEL = 'accounts.User' # standart user evezineUser modelini istafadeni bildiri
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -135,10 +156,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -157,3 +175,20 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 CELERY_BROKER_URL='redis://redis:6379/0'
+DEBUG = True
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+} 
+
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
