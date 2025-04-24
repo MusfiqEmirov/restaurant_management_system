@@ -6,6 +6,7 @@ from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
 
+
 class BonusTransaction(TimestampMixin, SoftDeleteMixin, models.Model):
     user = models.ForeignKey(
         User,

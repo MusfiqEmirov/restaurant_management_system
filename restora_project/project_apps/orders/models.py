@@ -3,6 +3,7 @@ from django.db import models
 from project_apps.core.mixins import TimestampMixin, SoftDeleteMixin
 from project_apps.accounts.models import User
 from project_apps.menu.models import MenuItem
+from project_apps.core.constants import STATUS_CHOICES, PAYMENT_TYPE_CHOICES
 from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
@@ -17,7 +18,7 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         on_delete=models.CASCADE, 
         related_name='orders', 
         verbose_name='musteri'
-    )
+        )
     total_amount = models.DecimalField(
         max_digits=10, 
         decimal_places=2,
@@ -25,15 +26,16 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         )
     status = models.CharField(
         max_length=20,
-        choices=(
-            ("pending", "gozleyir"),
-            ("completed", "tammalandi"),
-            ("cancelled", "legv olundu"),
-        ),
+        choices=(STATUS_CHOICES), 
         default="pending",
         verbose_name="status"
-    )
-    
+        )
+    payment_type = models.CharField(
+        max_length=10, 
+        choices=PAYMENT_TYPE_CHOICES, 
+        default='cash', 
+        verbose_name="Odenis novu"
+        )
     # her 10 azn ucun 1 xal sistemi
     def calculate_bonus_points(self):
         return int(self.total_amount // 10)
@@ -46,7 +48,7 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         )
     
     def __str__(self):
-        return f"Sifariş #{self.id} ({self.user.email})"
+        return f"Sifaris #{self.id} ({self.user.email})"
 
     class Meta:
         verbose_name = "sifaris"
