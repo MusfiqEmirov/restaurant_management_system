@@ -19,4 +19,4 @@ class OrderDocument(Document):
 
     class Django:
         model = Order
-        fields = []
+        fields = ['id']
