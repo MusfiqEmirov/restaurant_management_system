@@ -30,7 +30,7 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', "address",'bonus_points', 'created_at', 'is_deleted')
+    list_display = ('user', 'address', 'bonus_points', 'created_at', 'is_deleted')
     search_fields = ('user__username', 'user__email',)
     list_filter = ('is_deleted', 'created_at')
     ordering = ('-created_at',)
