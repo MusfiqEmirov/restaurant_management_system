@@ -21,6 +21,42 @@ services:
     networks:
       - restaurant_network
 
+  celery_worker:
+    build:
+      context: .
+    command: celery -A restora_project worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=restaurant_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    networks:
+      - restaurant_network
+
+  celery_beat:
+    build:
+      context: .
+    command: celery -A restora_project beat --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=restaurant_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    networks:
+      - restaurant_network
+
   postgres:
     image: postgres:15
     environment:
