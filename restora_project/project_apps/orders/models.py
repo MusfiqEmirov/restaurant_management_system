@@ -36,6 +36,7 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         default='cash', 
         verbose_name="Odenis novu"
         )
+    
     # her 10 azn ucun 1 xal sistemi
     def calculate_bonus_points(self):
         return int(self.total_amount // 10)

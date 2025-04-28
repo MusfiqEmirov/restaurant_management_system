@@ -5,7 +5,7 @@ from project_apps.core.constants import ROLE_CHOICES  # secimler ucun
 from project_apps.core.mixins import TimestampMixin, SoftDeleteMixin   
 
 
-class User(TimestampMixin, SoftDeleteMixin,AbstractUser):
+class User(TimestampMixin, SoftDeleteMixin, AbstractUser):
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='customer')
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)

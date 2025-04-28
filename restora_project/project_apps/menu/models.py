@@ -9,6 +9,7 @@ from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
 
+
 class Category(TimestampMixin, SoftDeleteMixin, models.Model):
     name = models.CharField(max_length=100, unique=True) # yalniz category adi
     description = models.TextField(blank=True, null=True)
