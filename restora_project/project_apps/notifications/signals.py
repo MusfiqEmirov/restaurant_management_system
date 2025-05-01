@@ -15,10 +15,18 @@ def create_discount_or_admin_code(sender, instance, created, **kwargs):
             discount_code = DiscountCode.objects.create(user=instance)
             send_discount_code_email.delay(instance.id, discount_code.id)
             logging.info(f"Endirim kodu yaradildi: {instance.email}")
+<<<<<<< HEAD
+        elif instance.role == "admin":
+            admin_code = AdminCode.objects.create(user=instance)
+            send_admin_code_email.delay(instance.id, admin_code.id)
+            logging.info(f"Admin kodu yaradildi: {instance.email}")
+            logging.info(f"Admin kodu gonderildi: {instance.email}, kod: {admin_code.code}")
+=======
         elif instance.is_staff:
             admin_code = AdminCode.objects.create(user=instance)
             send_admin_code_email.delay(instance.id, admin_code.id)
             logging.info(f"Admin kodu yaradildi: {instance.email}")
+>>>>>>> 4e44c0f2db27cae6f5c114505e05bfa2336efd83
 
 @receiver(post_save, sender=Notification)
 def log_notification_creation(sender, instance, created, **kwargs):

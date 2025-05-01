@@ -68,7 +68,6 @@ ELASTICSEARCH_DSL = {
 }
 
 AUTH_USER_MODEL = 'accounts.User' # standart user evezineUser modelini istafadeni bildiri
-
 # Verilənlər bazası (PostgreSQL Docker üçün)
 DATABASES = {
     'default': {

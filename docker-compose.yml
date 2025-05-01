@@ -91,6 +91,8 @@ services:
       - "80:80"
     depends_on:
       - web
+      - celery
+      - celery-beat
     networks:
       - restaurant_network
 
