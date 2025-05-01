@@ -18,7 +18,7 @@ load_dotenv(BASE_DIR / '.env')  # .env faylını yükləyi
 
 # Django ayarları
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True  # Debug modu aktiv olsun
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_celery_results',
     'django_elasticsearch_dsl',
+    'django_celery_beat',
 
 ]
 
@@ -174,7 +175,7 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
-CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://redis:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'  
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -182,20 +183,69 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Baku'
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60  
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 DEBUG = True
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/app/logs/django.log',
+            'maxBytes': 10*1024*1024,  # 10MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'error_file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/app/logs/django_error.log',
+            'maxBytes': 10*1024*1024,  # 10MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'app_file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/app/logs/app.log',
+            'maxBytes': 10*1024*1024,  # 10MB
+            'backupCount': 5,
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
         },
     },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['error_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'project_apps': {
+            'handlers': ['console', 'file', 'app_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
     },
 } 
 
