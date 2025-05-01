@@ -1,1 +1,0 @@
-**pycache**\*.pyc \*.pyo \*.pyd .Python env/ venv/ .env \*.log logs/ media/ static/ Pipfile.lock

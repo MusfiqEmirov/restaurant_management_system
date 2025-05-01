@@ -8,12 +8,13 @@ from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
 
+#test
 @shared_task
 def send_discount_code_email(user_id, discount_code_id):
     try:
         from project_apps.accounts.models import User
-        user = User.objects.get(id=user_id, is_deleted=False, role="customer")
-        discount_code = DiscountCode.objects.get(id=discount_code_id, is_deleted=False)
+        user = User.objects.get(id=user_id, is_delete=False, role="customer")
+        discount_code = DiscountCode.objects.get(id=discount_code_id, is_delete=False)
         notification = Notification.objects.create(
             user=user,
             title="Tebrikler siz artiq hesab acdiniz",
@@ -42,7 +43,7 @@ def send_discount_code_email(user_id, discount_code_id):
 def send_coffee_bonus_email(user_id):
     try:
         from project_apps.accounts.models import User
-        user = User.objects.get(id=user_id, is_deleted=False, role="customer")
+        user = User.objects.get(id=user_id, is_delete=False, role="customer")
         notification = Notification.objects.create(
             user=user,
             title="Təbrikler! Kofe qazandiniz!",
@@ -69,8 +70,8 @@ def send_coffee_bonus_email(user_id):
 def send_admin_code_email(user_id, admin_code_id):
     try:
         from project_apps.accounts.models import User
-        user = User.objects.get(id=user_id, role="admin", is_deleted=False)
-        admin_code = AdminCode.objects.get(id=admin_code_id, is_deleted=False)
+        user = User.objects.get(id=user_id, is_staff=True, is_delete=False)
+        admin_code = AdminCode.objects.get(id=admin_code_id, is_delete=False)
         notification = Notification.objects.create(
             user=user,
             title="Admin kodunuz",
@@ -84,8 +85,6 @@ def send_admin_code_email(user_id, admin_code_id):
         )
         admin_code.notification = notification
         admin_code.save()
-        
-        # Email gönderimi
         send_mail(
             notification.title,
             notification.message,
@@ -94,17 +93,16 @@ def send_admin_code_email(user_id, admin_code_id):
             fail_silently=False,
         )
         logging.info(f"Admin kodu maile gonderildi: {user.email}, kod: {admin_code.code}")
-    except Exception as e:
+    except Exception  as e:
         logging.error(f"admin kodu gonderilemde xeta bas verdi.xeta:{e}")
-        logging.error(f"User ID: {user_id}, Admin Code ID: {admin_code_id}")
 
 @shared_task
 def check_customer_points():
     try:
         from project_apps.accounts.models import User
-        customers = User.objects.filter(role="customer", is_deleted=False)
+        customers = User.objects.filter(role="customer", is_delete=False)
         for customer in customers:
-            points_obj, _ = BonusPoints.objects.get_or_create(user=customer, is_deleted=False)
+            points_obj, _ = BonusPoints.objects.get_or_create(user=customer, is_delete=False)
             if points_obj.points >= 5 and points_obj.points > points_obj.last_notified_points:
                 send_coffee_bonus_email.delay(customer.id)
                 points_obj.last_notified_points = points_obj.points
