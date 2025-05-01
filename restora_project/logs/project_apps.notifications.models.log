@@ -9,5 +9,8 @@
 2025-05-02 00:17:01,750 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
 2025-05-02 00:18:47,849 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
 2025-05-02 00:54:08,522 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+<<<<<<< HEAD
+=======
 2025-05-02 01:01:05,244 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
 2025-05-02 01:01:51,915 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+>>>>>>> b38ac48c99918191896899673a2a5f2588dc44ca
