@@ -26,3 +26,8 @@
 2025-05-02 00:54:07,181 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
 2025-05-02 00:54:07,186 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 8b530d56-8f90-4447-b956-c8eec6a07e8b
 2025-05-02 00:54:07,342 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-02 01:01:02,729 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 01:01:02,731 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: db968587-9bd2-4c24-9a94-71433da677f3
+2025-05-02 01:01:03,004 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-02 01:01:51,838 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 01:01:51,867 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
