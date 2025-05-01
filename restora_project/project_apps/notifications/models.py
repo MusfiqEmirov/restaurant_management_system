@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 
 from project_apps.core.mixins import TimestampMixin, SoftDeleteMixin
@@ -24,7 +25,7 @@ class Notification(TimestampMixin, SoftDeleteMixin, models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        logging.info(f"bildiris yaradildi: {self.user.email}, başlıq: {self.title}")
+        logging.info(f"bildiris yaradildi: {self.user.email}, basliq: {self.title}")
 
     def __str__(self):
         return f"{self.title} ({self.user.email})"
@@ -32,3 +33,76 @@ class Notification(TimestampMixin, SoftDeleteMixin, models.Model):
     class Meta:
         verbose_name = "bildiris"
         verbose_name_plural = "bildirisler"
+
+
+class DiscountCode(TimestampMixin, SoftDeleteMixin, models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="discount_codes",
+        verbose_name="bildiris"
+    )
+    code = models.CharField(
+        max_length=50,
+        unique=True,
+        default=uuid.uuid4
+    )
+    is_used = models.BooleanField(default=False)
+    notification = models.ForeignKey(
+        Notification,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="discount_codes",
+        verbose_name="bildiris"
+    )
+
+    def __str__(self):
+        return self.code
+    
+    class Meta:
+        verbose_name = "endirim kodu"
+        verbose_name_plural = "endirim kodlari"
+
+
+class BonusPoints(TimestampMixin, SoftDeleteMixin, models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="bonus_points",
+        verbose_name="musteri"
+    )
+    points = models.IntegerField(default=0)
+    last_notified_points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.points} xal"
+    
+    class Meta:
+        verbose_name = "bonus xal"
+        verbose_name_plural = "bonus xallar"
+
+
+class AdminCode(TimestampMixin, SoftDeleteMixin, models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="admin_codes",
+        limit_choices_to={'is_staff': True},
+        verbose_name="admin"
+    )
+    code = models.CharField(max_length=50, unique=True, default=uuid.uuid4)
+    notification = models.ForeignKey(
+        Notification,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="admin_codes",
+        verbose_name="bildiris"
+    )
+
+    def __str__(self):
+        return self.code
+    
+    class Meta:
+        verbose_name = "admin kodu"
+        verbose_name_plural = "admin kodlari"
+
