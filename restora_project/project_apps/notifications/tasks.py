@@ -8,6 +8,7 @@ from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
 
+#test
 @shared_task
 def send_discount_code_email(user_id, discount_code_id):
     try:
