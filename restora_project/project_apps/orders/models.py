@@ -54,6 +54,9 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
     class Meta:
         verbose_name = "sifaris"
         verbose_name_plural = "sifarisler"
+        indexes = [
+            models.Index(fields=['user', 'is_deleted']),
+        ]
 
 
 class OrderItem(TimestampMixin, SoftDeleteMixin, models.Model):

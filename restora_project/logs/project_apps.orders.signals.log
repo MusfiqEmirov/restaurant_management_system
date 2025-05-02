@@ -1,0 +1,5 @@
+2025-05-03 00:23:41,074 - project_apps.orders.signals - INFO - Xallar elave olundu: musfiq.emirov5@gmail.com, xal: 3
+2025-05-03 00:23:41,081 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #1, musteri: musfiq.emirov5@gmail.com
+2025-05-03 00:24:01,458 - project_apps.orders.signals - INFO - Xallar elave olundu: musfiq.emirov5@gmail.com, xal: 2
+2025-05-03 00:24:01,459 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #2, musteri: musfiq.emirov5@gmail.com
+2025-05-03 02:14:11,987 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #3, musteri: admikdb@gmail.com
