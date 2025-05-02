@@ -2,10 +2,12 @@ from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
 from django.utils import timezone
+from django.db.models import Sum
 
-from .models import Notification, DiscountCode, AdminCode, BonusPoints
+from project_apps.accounts.models import User
+from project_apps.notifications.models import Notification, BonusPoints, DiscountCode
+from project_apps.orders.models import Order
 from project_apps.core.logging import get_logger
-
 logging = get_logger(__name__)
 
 @shared_task
@@ -101,14 +103,25 @@ def send_admin_code_email(user_id, admin_code_id):
 @shared_task
 def check_customer_points():
     try:
-        from project_apps.accounts.models import User
         customers = User.objects.filter(role="customer", is_deleted=False)
+        
         for customer in customers:
+            # Bütün sifarişləri alırıq
+            orders = Order.objects.filter(user=customer, is_deleted=False)
+            total_spent = orders.aggregate(Sum('total_amount'))['total_amount__sum'] or 0
+            points = int(total_spent // 10)
+            
             points_obj, _ = BonusPoints.objects.get_or_create(user=customer, is_deleted=False)
-            if points_obj.points >= 5 and points_obj.points > points_obj.last_notified_points:
-                send_coffee_bonus_email.delay(customer.id)
-                points_obj.last_notified_points = points_obj.points
+            
+            if points_obj.points != points:
+                points_obj.points = points
                 points_obj.save()
-                logging.info(f"Kofe bonusu test edildi və gonderildi: {customer.email}")
+            
+            if points >= 5 and points > points_obj.last_notified_points:
+                send_coffee_bonus_email.delay(customer.id)
+                points_obj.last_notified_points = points
+                points_obj.save()
+                logging.info(f"Kofe bonusu gonderildi: {customer.email}, xercleme: {total_spent:.2f} AZN, xal: {points}")
+    
     except Exception as e:
-        logging.error(f"Xal yoxlanisi zamnai xeta: {e}")
+        logging.error(f"Xal yoxlanisi zamani xeta:{e}")
