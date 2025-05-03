@@ -24,3 +24,24 @@
 2025-05-03 02:07:06,692 - project_apps.notifications.tasks - ERROR - admin kodu gonderilemde xeta bas verdi.xeta:name 'AdminCode' is not defined
 2025-05-03 02:07:06,696 - project_apps.notifications.tasks - ERROR - User ID: 21, Admin Code ID: 4
 2025-05-03 02:15:59,248 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:name 'DiscountCode' is not defined
+2025-05-03 02:58:03,556 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:[Errno -3] Temporary failure in name resolution
+2025-05-03 02:59:21,577 - project_apps.notifications.tasks - ERROR - admin kodu gonderilemde xeta bas verdi.xeta:name 'AdminCode' is not defined
+2025-05-03 02:59:21,577 - project_apps.notifications.tasks - ERROR - User ID: 24, Admin Code ID: 5
+2025-05-03 03:01:00,033 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 03:02:00,042 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 03:03:00,043 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 03:04:00,046 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 03:05:00,048 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 05:41:04,129 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 18:12:13,402 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 18:13:42,502 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 18:14:12,977 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 18:15:00,112 - project_apps.notifications.tasks - ERROR - Xal yoxlanisi zamani xeta:get() returned more than one BonusPoints -- it returned 2!
+2025-05-03 18:16:00,411 - project_apps.notifications.tasks - INFO - Kofe bonusu gonderildi: admikdb@gmail.com, xercleme: 35468.00 AZN, xal: 3546
+2025-05-03 18:16:03,083 - project_apps.notifications.tasks - ERROR - kofe bonusu gonderilmedi xeta:[Errno -3] Temporary failure in name resolution
+2025-05-03 18:27:18,763 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:[Errno -3] Temporary failure in name resolution
+2025-05-03 18:29:18,364 - project_apps.notifications.tasks - ERROR - kofe bonusu gonderilmedi xeta:[Errno -3] Temporary failure in name resolution
+2025-05-03 20:02:32,535 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:b4a302b6-1b31-4beb-acb5-bc3360088f5d
+2025-05-03 20:05:10,674 - project_apps.notifications.tasks - INFO - Admin kodu maile gonderildi: musfiq.emirov5@gmail.com, kod: 1d28b0f1-196b-40e9-aae8-3101007ebc78
+2025-05-03 20:09:24,520 - project_apps.notifications.tasks - INFO - Kofe bonusu gonderildi: musfiq.emirov5@gmail.com, xercleme: 679.00 AZN, xal: 67
+2025-05-03 20:09:25,533 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emirov5@gmail.com

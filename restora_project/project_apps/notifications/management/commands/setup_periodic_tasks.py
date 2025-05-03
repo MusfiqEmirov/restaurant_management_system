@@ -6,8 +6,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         schedule, _ = CrontabSchedule.objects.get_or_create(
-            minute='0',
-            hour='*/1',  # Hər saat başı
+            minute='*/1',
+            hour='*',  # Hər saat başı
             day_of_week='*',
             day_of_month='*',
             month_of_year='*',
