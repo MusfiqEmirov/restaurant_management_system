@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+from datetime import timedelta
+
 BASE_DIR = Path(__file__).resolve().parent.parent  # Bu, layihənin kök qovluğuna işarə edir
 load_dotenv(BASE_DIR / '.env')  # .env faylını yükləyi
 
@@ -55,9 +57,11 @@ INSTALLED_APPS = [
 
     # library
     'rest_framework',
+    'rest_framework_simplejwt',
     'django_celery_results',
     'django_elasticsearch_dsl',
     'django_celery_beat',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -89,6 +93,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',  # Qeydiyyat üçün publik giriş
+    ),
+}
 
 ROOT_URLCONF = 'restora_project.urls'
 # Static files (CSS, JavaScript, Images)
@@ -250,3 +263,12 @@ LOGGING = {
 
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+SIMPLE_JWT = {
+
+'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+'ROTATE_REFRESH_TOKENS': True, # logout ucun
+'BLACKLIST_AFTER_ROTATION': True, # logout ucun
+'AUTH_HEADER_TYPES': ('Bearer',),
+}

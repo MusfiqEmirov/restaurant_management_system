@@ -106,22 +106,27 @@ def check_customer_points():
         customers = User.objects.filter(role="customer", is_deleted=False)
         
         for customer in customers:
-            # Bütün sifarişləri alırıq
             orders = Order.objects.filter(user=customer, is_deleted=False)
             total_spent = orders.aggregate(Sum('total_amount'))['total_amount__sum'] or 0
             points = int(total_spent // 10)
-            
+
             points_obj, _ = BonusPoints.objects.get_or_create(user=customer, is_deleted=False)
-            
-            if points_obj.points != points:
-                points_obj.points = points
-                points_obj.save()
-            
-            if points >= 5 and points > points_obj.last_notified_points:
+
+            logging.info(f"{customer.email} => Total spent: {total_spent}, Points: {points}, Last notified: {points_obj.last_notified_points}")
+
+            new_bonus_count = points // 5
+            old_bonus_count = (points_obj.last_notified_points or 0) // 5
+            bonuses_to_send = new_bonus_count - old_bonus_count
+
+            for _ in range(bonuses_to_send):
                 send_coffee_bonus_email.delay(customer.id)
+                logging.info(f"Kofe bonusu gonderildi: {customer.email}, xal: {points}")
+
+            if points_obj.points != points or bonuses_to_send > 0:
+                points_obj.points = points
                 points_obj.last_notified_points = points
                 points_obj.save()
-                logging.info(f"Kofe bonusu gonderildi: {customer.email}, xercleme: {total_spent:.2f} AZN, xal: {points}")
-    
+
     except Exception as e:
-        logging.error(f"Xal yoxlanisi zamani xeta:{e}")
+        logging.error(f"Xal yoxlanisi zamani xeta: {e}")
+

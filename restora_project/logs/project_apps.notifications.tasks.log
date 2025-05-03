@@ -45,3 +45,29 @@
 2025-05-03 20:05:10,674 - project_apps.notifications.tasks - INFO - Admin kodu maile gonderildi: musfiq.emirov5@gmail.com, kod: 1d28b0f1-196b-40e9-aae8-3101007ebc78
 2025-05-03 20:09:24,520 - project_apps.notifications.tasks - INFO - Kofe bonusu gonderildi: musfiq.emirov5@gmail.com, xercleme: 679.00 AZN, xal: 67
 2025-05-03 20:09:25,533 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emirov5@gmail.com
+2025-05-03 20:52:28,646 - project_apps.notifications.tasks - INFO - Kofe bonusu gonderildi: musfiq.emirov5@gmail.com, xercleme: 824.00 AZN, xal: 82
+2025-05-03 20:52:35,263 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emirov5@gmail.com
+2025-05-03 21:09:00,797 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:79ee2b20-d179-4f30-9c63-a93c8e728abd
+2025-05-03 21:47:51,153 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 82
+2025-05-03 21:47:51,182 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-03 21:53:18,265 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 51.00, Points: 5, Last notified: 5
+2025-05-03 21:53:18,275 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-03 21:59:08,897 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emijrov5@gmail.com
+2025-05-03 21:59:46,515 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emijrov5@gmail.com
+2025-05-03 22:00:00,608 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 51.00, Points: 5, Last notified: 5
+2025-05-03 22:00:00,617 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-03 22:02:18,301 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 51.00, Points: 5, Last notified: 5
+2025-05-03 22:02:18,307 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-03 22:20:33,227 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:f5a4a346-e5b3-4174-8026-f926a3d2da26
+2025-05-03 23:00:00,366 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-03 23:00:00,373 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 54.00, Points: 5, Last notified: 0
+2025-05-03 23:00:00,458 - project_apps.notifications.tasks - INFO - Kofe bonusu gonderildi: musfiq.emirov5@gmail.com, xal: 5
+2025-05-03 23:00:03,674 - project_apps.notifications.tasks - INFO - Kofe bonusu maila gonderildi: musfiq.emirov5@gmail.com
+2025-05-04 00:00:00,444 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 00:00:00,456 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 54.00, Points: 5, Last notified: 5
+2025-05-04 01:02:41,999 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 01:02:42,010 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 54.00, Points: 5, Last notified: 5
+2025-05-04 01:56:04,874 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:1b7ba4a8-4b28-4405-bc75-193259c4d56c
+2025-05-04 02:00:00,180 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 02:00:00,191 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 02:00:54,168 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:User matching query does not exist.

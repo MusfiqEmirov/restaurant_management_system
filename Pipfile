@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 django = "*"
-djangorestframework = "*"
 pillow = "*"
 celery = "*"
 redis = "*"
@@ -14,9 +13,11 @@ django-celery-results = "*"
 elasticsearch = "*"
 dj-database-url = "*"
 django-elasticsearch-dsl = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
 gunicorn = "*"
 django-celery-beat = "==2.7.0"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

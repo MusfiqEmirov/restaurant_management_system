@@ -15,7 +15,7 @@ class Command(BaseCommand):
         )
         PeriodicTask.objects.get_or_create(
             crontab=schedule,
-            name='Check customer points hourly',
+            name='Check customer points accuracy',
             task='project_apps.notifications.tasks.check_customer_points',
         )
         self.stdout.write(self.style.SUCCESS('Periodic tasks setup successfully'))
