@@ -10,6 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.accounts_bridge_core.urls')),
     path('api/', include('api.notifications_bridge_core.urls')),
+    path('api/', include('menu_bridge_core.urls')),
 ]
 
 if settings.DEBUG:
