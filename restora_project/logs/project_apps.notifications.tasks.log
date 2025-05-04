@@ -106,3 +106,8 @@ project_apps.notifications.models.Message.DoesNotExist: Message matching query d
 2025-05-04 22:15:37,420 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: a@a.com -> b@b.com, Mesaj ID: 5
 2025-05-04 22:15:54,205 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: a@a.com -> b@b.com, Mesaj ID: 5
 2025-05-04 22:19:06,163 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com, Mesaj ID: 6
+2025-05-04 22:27:57,357 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:ebilebilli3@gmail.com,kod:8a6ed58e-d3ed-446c-89ef-5497144928ba
+2025-05-04 22:28:54,043 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:User matching query does not exist.
+2025-05-04 22:31:07,840 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:b777704e-ad03-4862-b44a-7609b859e8df
+2025-05-04 22:31:40,466 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:ebilebilli3@gmail.com,kod:8b81d4e3-31f6-48f0-974f-5fc129dce44e
+2025-05-04 22:35:29,771 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com, Mesaj ID: 7

@@ -1,0 +1,4 @@
+2025-05-04 22:33:55,814 - api.notifications_bridge_core.views - ERROR - Serializer xətası: {'recipient': [ErrorDetail(string='Invalid pk "2" - object does not exist.', code='does_not_exist')]}
+2025-05-04 22:34:07,198 - api.notifications_bridge_core.views - ERROR - Serializer xətası: {'recipient': [ErrorDetail(string='Invalid pk "10" - object does not exist.', code='does_not_exist')]}
+2025-05-04 22:34:13,464 - api.notifications_bridge_core.views - ERROR - Serializer xətası: {'non_field_errors': [ErrorDetail(string='musteriler yalnis admine mesaj gondere biler', code='invalid')]}
+2025-05-04 22:35:27,975 - api.notifications_bridge_core.views - INFO - Mesaj göndərildi: ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com

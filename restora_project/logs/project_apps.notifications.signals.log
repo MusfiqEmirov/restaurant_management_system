@@ -211,3 +211,12 @@ elastic_transport.ConnectionError: Connection error caused by: ConnectionError(C
 2025-05-04 22:15:35,590 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi a@a.com -> b@b.com
 2025-05-04 22:19:03,484 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
 2025-05-04 22:19:04,222 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com
+2025-05-04 22:27:52,305 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-04 22:27:52,919 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:28:54,012 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 22:31:06,325 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 22:31:06,392 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:31:38,470 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-04 22:31:38,554 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:35:27,807 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:35:27,975 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com
