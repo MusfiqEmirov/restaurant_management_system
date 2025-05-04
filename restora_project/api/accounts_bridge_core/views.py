@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, serializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.token_blacklist.models import OutstandingToken, BlacklistedToken
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.shortcuts import get_object_or_404
@@ -15,7 +14,7 @@ from project_apps.accounts.models import User, Profile
 from project_apps.accounts.serializers import (UserSerializer,
                                                RegisterSerializer,
                                                ProfileSerializer,
-                                               CustomTokenObtainPairSerializer,
+                                               LoginSerializer,
                                                AdminUserCreateSerializer
                                                )
 
@@ -144,22 +143,38 @@ class ProfileDetailAPIView(APIView):
             return Response({'error': 'profil silme zamani xeta bas verdi '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
-class CustomTokenObtainPairView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
+class LoginView(APIView):
     permission_classes = [AllowAny]
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         """
-          email ve parol ile jwt token almag
+        email ve ya parol ile giris
         """
-        serializer = self.get_serializer(data=request.data)
-        try:
-            serializer.is_valid(raise_exception=True)
-            logger.info(f"User daxil oldu: {serializer.validated_data['user']['email']}")
-            return Response(serializer.validated_data, status=status.HTTP_200_OK)
-        except Exception as e:
-            logger.error(f"Login xetasi: {str(e)}")
-            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        logger.debug(f"login sorgusu ugurla alindi {request.data}")
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                user = serializer.validated_data['user']
+                refresh = RefreshToken.for_user(user)
+                token_data = {
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                }
+                logger.info(f"user daxil oldu {user.email}")
+                return Response({
+                    'user': {
+                        'id': user.id,
+                        'email': user.email,
+                        'username': user.username,
+                        'role': user.role
+                    },
+                    'tokens': token_data
+                }, status=status.HTTP_200_OK)
+            except Exception as e:
+                logger.error(f"login xetasi {str(e)}", exc_info=True)
+                return Response({'error': 'giris zamani xeta bas verdi'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        logger.error(f"Serializer xetasi: {serializer.errors}")
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
@@ -167,22 +182,22 @@ class LogoutView(APIView):
 
     def post(self, request):
         """
-       user ucun logout
+        User üçün logout. Refresh token-i qara siyahıya əlavə edir.
         """
+        logger.debug(f"Logout sorğusu alındı: {request.data}")
         try:
             refresh_token = request.data.get("refresh")
             if not refresh_token:
-                return Response({"error": "refrefs ucunn token teleb olunur"}, status=status.HTTP_400_BAD_REQUEST)
+                logger.error("Refresh token daxil edilməyib.")
+                return Response({"error": "Refresh token tələb olunur."}, status=status.HTTP_400_BAD_REQUEST)
             
-            token = OutstandingToken.objects.filter(token=refresh_token).first()
-            if token:
-                BlacklistedToken.objects.create(token=token)
-                logger.info(f"User cixis etdi: {request.user.email}")
-                return Response({"message":"cixiw ugurla tamamlandi"}, status=status.HTTP_205_RESET_CONTENT)
-            return Response({"error": "yalniw token"}, status=status.HTTP_400_BAD_REQUEST)
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            logger.info(f"User çıxış etdi: {request.user.email}")
+            return Response({"message": "ugurla cixis olundu"}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            logger.error(f"Logout xetasi: {str(e)}", exc_info=True)
-            return Response({'error': "logut zamani xeta bas verid"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            logger.error(f"Logout xətası: {str(e)}", exc_info=True)
+            return Response({"error": f"Çıxış zamanı xəta baş verdi: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
 
         
 class AdminUserCreateView(APIView):

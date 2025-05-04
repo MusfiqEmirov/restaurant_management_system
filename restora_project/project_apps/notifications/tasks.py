@@ -5,10 +5,15 @@ from django.utils import timezone
 from django.db.models import Sum
 
 from project_apps.accounts.models import User
-from project_apps.notifications.models import Notification, BonusPoints, DiscountCode, AdminCode
+from project_apps.notifications.models import (Notification,
+                                               BonusPoints,
+                                               DiscountCode,
+                                               AdminCode,
+                                               Message
+                                               )
 from project_apps.orders.models import Order
 from project_apps.core.logging import get_logger
-logging = get_logger(__name__)
+logger = get_logger(__name__)
 
 @shared_task
 def send_discount_code_email(user_id, discount_code_id):
@@ -36,9 +41,9 @@ def send_discount_code_email(user_id, discount_code_id):
             [user.email],
             fail_silently=False,
         )
-        logging.info(f"endirim kodu gonderildi:{user.email},kod:{discount_code.code}")
+        logger.info(f"endirim kodu gonderildi:{user.email},kod:{discount_code.code}")
     except Exception as e:
-        logging.error(f"endrim kodu gonderilmedi xeta:{e}")
+        logger.error(f"endrim kodu gonderilmedi xeta:{e}")
 
 @shared_task
 def send_coffee_bonus_email(user_id):
@@ -63,9 +68,9 @@ def send_coffee_bonus_email(user_id):
             [user.email],
             fail_silently=False,
         )
-        logging.info(f"Kofe bonusu maila gonderildi: {user.email}")
+        logger.info(f"Kofe bonusu maila gonderildi: {user.email}")
     except Exception as e:
-        logging.error(f"kofe bonusu gonderilmedi xeta:{e}")
+        logger.error(f"kofe bonusu gonderilmedi xeta:{e}")
 
 @shared_task
 def send_admin_code_email(user_id, admin_code_id):
@@ -95,10 +100,10 @@ def send_admin_code_email(user_id, admin_code_id):
             [user.email],
             fail_silently=False,
         )
-        logging.info(f"Admin kodu maile gonderildi: {user.email}, kod: {admin_code.code}")
+        logger.info(f"Admin kodu maile gonderildi: {user.email}, kod: {admin_code.code}")
     except Exception as e:
-        logging.error(f"admin kodu gonderilemde xeta bas verdi.xeta:{e}")
-        logging.error(f"User ID: {user_id}, Admin Code ID: {admin_code_id}")
+        logger.error(f"admin kodu gonderilemde xeta bas verdi.xeta:{e}")
+        logger.error(f"User ID: {user_id}, Admin Code ID: {admin_code_id}")
 
 @shared_task
 def check_customer_points():
@@ -112,7 +117,7 @@ def check_customer_points():
 
             points_obj, _ = BonusPoints.objects.get_or_create(user=customer, is_deleted=False)
 
-            logging.info(f"{customer.email} => Total spent: {total_spent}, Points: {points}, Last notified: {points_obj.last_notified_points}")
+            logger.info(f"{customer.email} => Total spent: {total_spent}, Points: {points}, Last notified: {points_obj.last_notified_points}")
 
             new_bonus_count = points // 5
             old_bonus_count = (points_obj.last_notified_points or 0) // 5
@@ -120,7 +125,7 @@ def check_customer_points():
 
             for _ in range(bonuses_to_send):
                 send_coffee_bonus_email.delay(customer.id)
-                logging.info(f"Kofe bonusu gonderildi: {customer.email}, xal: {points}")
+                logger.info(f"Kofe bonusu gonderildi: {customer.email}, xal: {points}")
 
             if points_obj.points != points or bonuses_to_send > 0:
                 points_obj.points = points
@@ -128,5 +133,30 @@ def check_customer_points():
                 points_obj.save()
 
     except Exception as e:
-        logging.error(f"Xal yoxlanisi zamani xeta: {e}")
+        logger.error(f"Xal yoxlanisi zamani xeta: {e}")
 
+
+@shared_task
+def send_message_notification_email(message_id, sender_email, recipient_email, content):
+    try:
+        message = Message.objects.get(id=message_id, is_deleted=False)
+        
+        # notificationu bir basa message notificatin messageden aliriq
+        notification = message.notification
+        
+        # eger mesaj yoxdusa qeyd edirik
+        if not notification:
+            logger.error(f"No notification found for message ID: {message_id}")
+            return
+        
+        send_mail(
+            notification.title,
+            notification.message,
+            settings.DEFAULT_FROM_EMAIL,
+            [recipient_email],
+            fail_silently=False,
+        )
+        
+        logger.info(f"mesaj bildiris gonderildi: {sender_email} -> {recipient_email}, Mesaj ID: {message_id}")
+    except Exception as e:
+        logger.error(f"mesaj bildiriis godnerilmedi, Mesaj ID: {message_id}, xeta: {str(e)}", exc_info=True)

@@ -71,3 +71,38 @@
 2025-05-04 02:00:00,180 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
 2025-05-04 02:00:00,191 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
 2025-05-04 02:00:54,168 - project_apps.notifications.tasks - ERROR - endrim kodu gonderilmedi xeta:User matching query does not exist.
+2025-05-04 14:07:34,462 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 14:07:34,482 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 14:07:34,559 - project_apps.notifications.tasks - INFO - musfiq.emirdvdov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 17:25:34,386 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 17:25:34,394 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 17:25:34,409 - project_apps.notifications.tasks - INFO - musfiq.emirdvdov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 17:45:54,025 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:57c4992b-573a-4d43-ad96-a0c2cc0de553
+2025-05-04 17:57:39,987 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:08114e40-2c58-4c4e-ad6b-e6c10fec980e
+2025-05-04 18:00:00,071 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 18:00:00,082 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 18:24:20,441 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:f6a8d50d-4c23-44ae-9004-c7699cb0864e
+2025-05-04 19:00:00,656 - project_apps.notifications.tasks - INFO - musfiq.emijrov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 19:00:00,689 - project_apps.notifications.tasks - INFO - musfiq.emirov5@gmail.com => Total spent: 0, Points: 0, Last notified: 0
+2025-05-04 19:11:03,720 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfiq.emirov5@gmail.com,kod:437172bb-4c13-41b9-8228-61038f8609c7
+2025-05-04 20:13:17,281 - project_apps.notifications.tasks - INFO - Admin kodu maile gonderildi: admin@example.com, kod: 5e88fa65-148c-49ba-a968-542390a9d084
+2025-05-04 21:22:07,907 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:musfikwjen.emirov@gmail.com,kod:9133e964-99fc-46c9-a385-76305913517e
+2025-05-04 21:27:19,456 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:ebilebilli3@gmail.com,kod:13e5cf8b-4cb7-498f-813a-32789398767e
+2025-05-04 21:28:32,026 - project_apps.notifications.tasks - INFO - Admin kodu maile gonderildi: musfiq.emirov5@gmail.com, kod: 646f6ea3-a2ac-435e-97a4-684bcc5d158b
+2025-05-04 22:10:39,505 - project_apps.notifications.tasks - ERROR - Mesaj gonderilmedi, Mesaj ID: 1, Xəta: Message matching query does not exist.
+Traceback (most recent call last):
+  File "/app/restora_project/project_apps/notifications/tasks.py", line 142, in send_message_notification_email
+    message = Message.objects.get(id=message_id, is_deleted=False)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/query.py", line 649, in get
+    raise self.model.DoesNotExist(
+project_apps.notifications.models.Message.DoesNotExist: Message matching query does not exist.
+2025-05-04 22:15:17,260 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:b@b.com,kod:ab02ddfd-5212-4878-b189-edafbaff076b
+2025-05-04 22:15:17,510 - project_apps.notifications.tasks - INFO - endirim kodu gonderildi:a@a.com,kod:7d5ade56-a1a2-4c8f-beed-48a85d638bd1
+2025-05-04 22:15:24,118 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: a@a.com -> b@b.com, Mesaj ID: 4
+2025-05-04 22:15:37,420 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: a@a.com -> b@b.com, Mesaj ID: 5
+2025-05-04 22:15:54,205 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: a@a.com -> b@b.com, Mesaj ID: 5
+2025-05-04 22:19:06,163 - project_apps.notifications.tasks - INFO - Mesaj bildirisi gonderildi: ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com, Mesaj ID: 6

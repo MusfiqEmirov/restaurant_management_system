@@ -57,10 +57,10 @@ INSTALLED_APPS = [
 
     # library
     'rest_framework',
-    'rest_framework_simplejwt',
     'django_celery_results',
     'django_elasticsearch_dsl',
     'django_celery_beat',
+    'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 
 ]

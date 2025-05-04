@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
-from .models import Notification, DiscountCode, BonusPoints, AdminCode
+from .models import (Notification,
+                     DiscountCode,
+                     BonusPoints,
+                     AdminCode,
+                     Message
+                     )
 from project_apps.accounts.serializers import UserSerializer
 from project_apps.accounts.models import User
 
@@ -163,3 +168,43 @@ class AdminCodeSerializer(serializers.ModelSerializer):
         if not value:
             raise serializers.ValidationError("Kod bow ola bilmez")
         return value
+    
+
+class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(is_deleted=False),
+        default=serializers.CurrentUserDefault()
+    )
+    recipient = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(is_deleted=False)
+    )
+
+    class Meta:
+        model = Message
+        fields = ['id',
+                  'sender',
+                  'recipient',
+                  'content',
+                  'is_read',
+                  'notification',
+                  'created_at',
+                  'updated_at'
+                  ]
+        read_only_fields = ['id',
+                            'sender',
+                            'is_read',
+                            'notification',
+                            'created_at',
+                            'updated_at'
+                            ]
+
+    def validate(self, data):
+        sender = self.context['request'].user
+        recipient = data.get('recipient')
+        if sender == recipient:
+            raise serializers.ValidationError("ozune mesaj gondermek olmaz")
+        if sender.role == 'customer' and recipient.role != 'admin':
+            raise serializers.ValidationError("musteriler yalnis admine mesaj gondere biler")
+        if sender.role == 'admin' and recipient.role != 'customer':
+            raise serializers.ValidationError("adminler yalniz musterilere mesaj gondere biler")
+        return data    

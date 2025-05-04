@@ -1,8 +1,11 @@
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from project_apps.core.constants import ROLE_CHOICES
 from .models import *
+from project_apps.core.logging import get_logger
+
+logger = get_logger(__name__)
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -99,34 +102,31 @@ class RegisterSerializer(UserSerializer):
         return user
     
 
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    username_field = 'email'
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(required=True, write_only=True)
 
-    def validate(self, attrs):
-        """
-        email ve parol ile giriw
-        """
-        email = attrs.get('email')
-        password = attrs.get('password')
+    def validate(self, data):
+        email = data.get('email')
+        password = data.get('password')
+
+        logger.debug(f"Login cəhdi: email={email}")
 
         if not email or not password:
-            raise serializers.ValidationError('email ve parol teleb olunur')
+            logger.error("email ve ya parol daxil edilmeyib")
+            raise serializers.ValidationError('email ve [parol teleb olunur]')
 
-        user = User.objects.filter(email=email, is_deleted=False).first()
-        if not user or not user.check_password(password):
-            raise serializers.ValidationError('email ve ya parol yalniwdir')
+        user = User.objects.filter(email=email, is_deleted=False, is_active=True).first()
+        if not user:
+            logger.error(f"User tapılmadı: email={email}, is_deleted=False, is_active=True")
+            raise serializers.ValidationError('hesab tapilmadi ve ya aktiv deyil')
+        if not user.check_password(password):
+            logger.error(f"Parol yalniwdir: email={email}")
+            raise serializers.ValidationError('parol yalniwdir')
 
-        if not user.is_active:
-            raise serializers.ValidationError('bu hesab aktiv deyil')
-
-        data = super().validate(attrs)
-        data['user'] = {
-            'id': user.id,
-            'email': user.email,
-            'username': user.username,
-            'role': user.role
-        }
-        return data    
+        logger.info(f"user dogrulama ugurla bas tutdu email={email}")
+        data['user'] = user
+        return data
     
 
 class AdminUserCreateSerializer(serializers.ModelSerializer):

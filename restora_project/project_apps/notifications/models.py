@@ -106,3 +106,34 @@ class AdminCode(TimestampMixin, SoftDeleteMixin, models.Model):
         verbose_name = "admin kodu"
         verbose_name_plural = "admin kodlari"
 
+
+class Message(TimestampMixin, SoftDeleteMixin, models.Model):
+    sender = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='sent_messages',
+        verbose_name="gonderen"
+    )
+    recipient = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='received_messages',
+        verbose_name="alan"
+    )
+    content = models.TextField(verbose_name="mesaj")
+    is_read = models.BooleanField(default=False, verbose_name="Oxunub")
+    notification = models.ForeignKey(
+        Notification,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="messages",
+        verbose_name="bildiris"
+    )
+
+    def __str__(self):
+        return f"{self.sender.email} -> {self.recipient.email}: {self.content[:50]}"
+
+    class Meta:
+        verbose_name = "mesaj"
+        verbose_name_plural = "mesajlar"
+        ordering = ['-created_at']

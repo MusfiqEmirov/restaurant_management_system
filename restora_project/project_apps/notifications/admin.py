@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from .models import Notification, DiscountCode, BonusPoints, AdminCode
+from .models import (Notification,
+                     DiscountCode,
+                     BonusPoints,
+                     AdminCode,
+                     Message)
 
 
 @admin.register(Notification)
@@ -81,3 +85,12 @@ class AdminCodeAdmin(admin.ModelAdmin):
             obj.created_by = request.user
         obj.updated_by = request.user
         super().save_model(request, obj, form, change)
+
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'sender', 'recipient', 'is_read', 'created_at', 'is_deleted')
+    search_fields = ('sender__email', 'recipient__email', 'content')
+    list_filter = ('is_read', 'is_deleted')
+    readonly_fields = ('created_at', 'updated_at')
+
