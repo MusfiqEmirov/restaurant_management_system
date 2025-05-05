@@ -1,0 +1,224 @@
+2025-05-01 20:56:31,701 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov@mail.ru
+2025-05-01 22:57:21,212 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: superadmin@example.com
+2025-05-01 23:01:51,029 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-01 23:04:57,208 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: superadmin@example.com, basliq: Admin kodunuz
+2025-05-01 23:04:57,216 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-01 23:12:59,648 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-01 23:12:59,846 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-01 23:15:19,912 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-01 23:15:19,953 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-01 23:38:31,678 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-01 23:38:31,681 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: e433633d-9ae5-40fc-a69c-444a89aaab9a
+2025-05-01 23:38:31,822 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-01 23:49:11,051 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiwkjb@gmail.com
+2025-05-01 23:49:11,231 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiwkjb@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-01 23:51:32,864 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-01 23:51:32,867 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 22708134-f2b6-4ff5-8a7d-a7e96bbeb84a
+2025-05-01 23:51:32,900 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-01 23:59:36,298 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-01 23:59:36,300 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: ca1e8776-847b-4dd9-b9c4-ff68a43daafc
+2025-05-01 23:59:36,468 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-02 00:17:00,130 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 00:17:00,363 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-02 00:18:47,533 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 00:18:47,535 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 40e42211-6dd1-4cbe-b12c-051cfc5b1a27
+2025-05-02 00:18:47,620 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-02 00:54:07,181 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 00:54:07,186 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 8b530d56-8f90-4447-b956-c8eec6a07e8b
+2025-05-02 00:54:07,342 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-02 01:49:14,808 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 01:49:15,369 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-02 01:51:03,256 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-02 01:51:03,257 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: f78d1054-f7c8-445e-811a-c06e4c8cd1ef
+2025-05-02 01:51:03,312 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-03 00:56:01,491 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 01:02:04,192 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 01:02:04,230 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 01:06:02,943 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 01:06:02,944 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: dc88a780-d757-4e42-b40c-a09d3e3c9b0e
+2025-05-03 01:06:02,978 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-03 01:12:21,429 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 01:12:21,792 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 01:16:07,761 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 01:16:07,796 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 01:59:40,169 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: admikdb@gmail.com
+2025-05-03 02:03:38,252 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 02:07:06,617 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: dakaldakali92@gmail.com
+2025-05-03 02:07:06,619 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: dakaldakali92@gmail.com, kod: 97e81487-f2a1-4781-89bd-2b1660e8e7ea
+2025-05-03 02:15:59,206 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 02:58:01,809 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 02:58:01,850 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 02:59:21,551 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 02:59:21,551 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 2f386fa7-1072-45c2-adc2-595c08dd63a6
+2025-05-03 18:16:01,040 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: admikdb@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 18:27:17,954 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 18:27:18,005 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 18:29:17,838 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 20:02:24,302 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 20:02:25,230 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 20:05:08,561 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 20:05:08,562 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 1d28b0f1-196b-40e9-aae8-3101007ebc78
+2025-05-03 20:05:08,605 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-03 20:09:24,599 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 20:52:29,242 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 21:08:57,655 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 21:08:58,108 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 21:59:03,782 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emijrov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 21:59:44,799 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emijrov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 22:20:30,271 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-03 22:20:30,535 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 23:00:00,710 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-04 01:55:59,506 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 01:55:59,633 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 02:00:54,144 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirdvdov5@gmail.com
+2025-05-04 17:45:51,299 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 17:45:51,504 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 17:57:36,767 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 17:57:36,814 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 18:24:18,087 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 18:24:18,209 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 19:11:00,053 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 19:11:00,325 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 20:13:10,305 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: admin@example.com
+2025-05-04 20:13:10,311 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: admin@example.com, kod: 5e88fa65-148c-49ba-a968-542390a9d084
+2025-05-04 20:13:11,133 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: admin@example.com, basliq: Admin kodunuz
+2025-05-04 21:22:03,922 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfikwjen.emirov@gmail.com
+2025-05-04 21:22:04,458 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfikwjen.emirov@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 21:25:52,195 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: admin@example.com, basliq: Yeni Mesaj: musfiq.emirov5@gmail.com
+2025-05-04 21:25:52,857 - project_apps.notifications.signals - INFO - mesaj bildirisi yarandi musfiq.emirov5@gmail.com -> admin@example.com
+2025-05-04 21:27:17,335 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-04 21:27:17,435 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 21:28:30,083 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 21:28:30,084 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: musfiq.emirov5@gmail.com, kod: 646f6ea3-a2ac-435e-97a4-684bcc5d158b
+2025-05-04 21:28:30,133 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-04 21:29:18,324 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 21:29:19,031 - project_apps.notifications.signals - INFO - mesaj bildirisi yarandi ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com
+2025-05-04 22:03:37,116 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:03:37,147 - project_apps.notifications.signals - ERROR - Xeta bas verdi mesaj bildirisi yaradilarkən: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f11c1f624b0>: Failed to establish a new connection: [Errno 111] Connection refused))
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connection.py", line 198, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/util/connection.py", line 85, in create_connection
+    raise err
+  File "/usr/local/lib/python3.12/site-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 167, in perform_request
+    response = self.pool.urlopen(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 841, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/util/retry.py", line 449, in increment
+    raise reraise(type(error), error, _stacktrace)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/util/util.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connectionpool.py", line 493, in _make_request
+    conn.request(
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connection.py", line 445, in request
+    self.endheaders()
+  File "/usr/local/lib/python3.12/http/client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/local/lib/python3.12/http/client.py", line 1093, in _send_output
+    self.send(msg)
+  File "/usr/local/lib/python3.12/http/client.py", line 1037, in send
+    self.connect()
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connection.py", line 276, in connect
+    self.sock = self._new_conn()
+                ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/urllib3/connection.py", line 213, in _new_conn
+    raise NewConnectionError(
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f11c1f63c20>: Failed to establish a new connection: [Errno 111] Connection refused
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/restora_project/project_apps/notifications/signals.py", line 50, in create_message_notification
+    notification = Notification.objects.create(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/query.py", line 679, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/app/restora_project/project_apps/notifications/models.py", line 27, in save
+    super().save(*args, **kwargs)
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/base.py", line 892, in save
+    self.save_base(
+  File "/usr/local/lib/python3.12/site-packages/django/db/models/base.py", line 1013, in save_base
+    post_save.send(
+  File "/usr/local/lib/python3.12/site-packages/django/dispatch/dispatcher.py", line 189, in send
+    response = receiver(signal=self, sender=sender, **named)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django_elasticsearch_dsl/signals.py", line 61, in handle_save
+    registry.update(instance)
+  File "/usr/local/lib/python3.12/site-packages/django_elasticsearch_dsl/registries.py", line 141, in update
+    doc().update(instance, **kwargs)
+  File "/usr/local/lib/python3.12/site-packages/django_elasticsearch_dsl/documents.py", line 259, in update
+    return self._bulk(
+           ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django_elasticsearch_dsl/documents.py", line 236, in _bulk
+    return self.bulk(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django_elasticsearch_dsl/documents.py", line 178, in bulk
+    response = bulk(client=self._get_connection(), actions=actions, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/helpers/actions.py", line 540, in bulk
+    for ok, item in streaming_bulk(
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/helpers/actions.py", line 453, in streaming_bulk
+    for data, (ok, info) in zip(
+                            ^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/helpers/actions.py", line 343, in _process_bulk_chunk
+    resp = client.bulk(*args, operations=bulk_actions, **kwargs)  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/_sync/client/utils.py", line 452, in wrapped
+    return api(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/_sync/client/__init__.py", line 827, in bulk
+    return self.perform_request(  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/_sync/client/_base.py", line 271, in perform_request
+    response = self._perform_request(
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elasticsearch/_sync/client/_base.py", line 315, in _perform_request
+    meta, resp_body = self.transport.perform_request(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elastic_transport/_transport.py", line 342, in perform_request
+    resp = node.perform_request(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/elastic_transport/_node/_http_urllib3.py", line 202, in perform_request
+    raise err from e
+elastic_transport.ConnectionError: Connection error caused by: ConnectionError(Connection error caused by: NewConnectionError(<urllib3.connection.HTTPConnection object at 0x7f11c1f624b0>: Failed to establish a new connection: [Errno 111] Connection refused))
+2025-05-04 22:15:12,374 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: a@a.com
+2025-05-04 22:15:12,426 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: a@a.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:15:12,761 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: b@b.com
+2025-05-04 22:15:12,891 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: b@b.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:15:21,832 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: b@b.com, basliq: Test mesaj
+2025-05-04 22:15:22,389 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: b@b.com, basliq: Yeni Mesaj: a@a.com
+2025-05-04 22:15:22,517 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi a@a.com -> b@b.com
+2025-05-04 22:15:32,029 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: b@b.com, basliq: Test mesaj
+2025-05-04 22:15:35,478 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: b@b.com, basliq: Yeni Mesaj: a@a.com
+2025-05-04 22:15:35,590 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi a@a.com -> b@b.com
+2025-05-04 22:19:03,484 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:19:04,222 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com
+2025-05-04 22:27:52,305 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-04 22:27:52,919 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:28:54,012 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 22:31:06,325 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: musfiq.emirov5@gmail.com
+2025-05-04 22:31:06,392 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:31:38,470 - project_apps.notifications.signals - INFO - Endirim kodu yaradildi: ebilebilli3@gmail.com
+2025-05-04 22:31:38,554 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:35:27,807 - project_apps.notifications.signals - INFO - Yeni bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:35:27,975 - project_apps.notifications.signals - INFO - Mesaj bildirisi yaradildi ebilebilli3@gmail.com -> musfiq.emirov5@gmail.com
+2025-05-05 04:10:32,781 - project_apps.notifications.signals - INFO - Admin kodu yaradildi: admin@example.com
+2025-05-05 04:10:32,783 - project_apps.notifications.signals - INFO - Admin kodu gonderildi: admin@example.com, kod: de6862be-558a-4f3c-8339-091375034dc4
