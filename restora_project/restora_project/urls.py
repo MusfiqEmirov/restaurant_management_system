@@ -3,14 +3,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 
-# Importing the index view
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.accounts_bridge_core.urls')),
     path('api/', include('api.notifications_bridge_core.urls')),
-    path('api/', include('menu_bridge_core.urls')),
+    path('api/', include('api.menu_bridge_core.urls')),
+    path('api/', include('api.orders_bridge_core.urls')),
+    path('api/', include('api.staff_bridge_core.urls')),
 ]
 
 if settings.DEBUG:

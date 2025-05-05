@@ -42,6 +42,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("say hemiwe musbet olmalidir")
         return value
     
+    
+        
 
 class OrderSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -49,6 +51,14 @@ class OrderSerializer(serializers.ModelSerializer):
         queryset=User.objects.filter(is_deleted=False, role="customer"),
         source="user",
         write_only=True
+    )
+    created_by = UserSerializer(read_only=True)
+    created_by_id = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.filter(is_deleted=False, role__in=["admin", "staff"]),
+        source="created_by",
+        write_only=True,
+        required=False,
+        allow_null=True,
     )
     order_items = OrderItemSerializer(many=True)
     bonus_points = serializers.IntegerField(
@@ -62,6 +72,8 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "user_id",
+            "created_by",
+            "created_by_id",
             "total_amount",
             "status",
             "payment_type",
@@ -69,7 +81,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "bonus_points",
             "created_at",
             "updated_at",
-            "is_deleted"
+            "is_deleted",
         ]
          # ancaq oxuna biler deyiwdirile bilmez
         read_only_fields = [ 
@@ -91,6 +103,19 @@ class OrderSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("yalniw odenis novu daxil etdiniz")
         return value
     
+    def create(self, validated_data):
+        order_items_data = validated_data.pop("order_items")
+        order = Order.objects.create(total_amount=0, **validated_data)
+
+        total = 0
+        for item_data in order_items_data:
+            item = OrderItem.objects.create(order=order, **item_data)
+            total += item.price * item.quantity
+
+        order.total_amount = total
+        order.save()
+        return order
+        
 
 class SalesReportSerializer(serializers.Serializer):
     start_date = serializers.DateField(required=True)

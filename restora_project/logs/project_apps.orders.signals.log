@@ -28,3 +28,6 @@
 2025-05-03 21:51:02,010 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #12, musteri: musfiq.emijrov5@gmail.com
 2025-05-03 22:21:05,533 - project_apps.orders.signals - INFO - Xallar elave olundu: musfiq.emirov5@gmail.com, xal: 5
 2025-05-03 22:21:05,534 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #13, musteri: musfiq.emirov5@gmail.com
+2025-05-05 04:32:54,933 - project_apps.orders.signals - INFO - Xallar elave olundu: ebilebilli3@gmail.com, xal: 68
+2025-05-05 04:32:54,937 - project_apps.orders.signals - INFO - Yeni sifaris yaradildi: #1, musteri: ebilebilli3@gmail.com
+2025-05-05 04:34:02,759 - project_apps.orders.signals - INFO - Yeni sifaris elementi: Kola, say: 46

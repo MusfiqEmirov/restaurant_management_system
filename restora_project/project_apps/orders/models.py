@@ -19,6 +19,14 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         related_name='orders', 
         verbose_name='musteri'
         )
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name='created_orders',
+        null=True,
+        blank=True,
+        verbose_name="Yaradan",
+    )
     total_amount = models.DecimalField(
         max_digits=10, 
         decimal_places=2,
@@ -76,8 +84,11 @@ class OrderItem(TimestampMixin, SoftDeleteMixin, models.Model):
         verbose_name="Menyu elementi"
     )
     quantity = models.PositiveIntegerField(verbose_name="say")
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    verbose_name = "qiymet"
+    price = models.DecimalField(max_digits=10,
+                                decimal_places=2,
+                                verbose_name = "qiymet"
+                                )
+    
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
