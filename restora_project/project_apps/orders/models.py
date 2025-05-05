@@ -8,21 +8,28 @@ from project_apps.core.logging import get_logger
 
 logging = get_logger(__name__)
 
-
 class Order(TimestampMixin, SoftDeleteMixin, models.Model):
     """
-    Sifarisler ve bonus sistemleri ucun
+    For orders and bonus systems
     """
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE, 
         related_name='orders', 
-        verbose_name='musteri'
+        verbose_name='customer'
         )
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        related_name='created_orders',
+        null=True,
+        blank=True,
+        verbose_name="Created by",
+    )
     total_amount = models.DecimalField(
         max_digits=10, 
         decimal_places=2,
-        verbose_name="umumi mebleg",
+        verbose_name="total amount",
         )
     status = models.CharField(
         max_length=20,
@@ -34,26 +41,26 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
         max_length=10, 
         choices=PAYMENT_TYPE_CHOICES, 
         default='cash', 
-        verbose_name="Odenis novu"
+        verbose_name="Payment type"
         )
     
-    # her 10 azn ucun 1 xal sistemi
+    # 1 point for every 10 AZN
     def calculate_bonus_points(self):
         return int(self.total_amount // 10)
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         logging.info(
-            f"sifaris yaradildi ve ya yenilendi:{self.user.email},"
-            f"mebleg:{self.total_amount} azn, status:{self.status}"
+            f"Order created or updated: {self.user.email}, "
+            f"Amount: {self.total_amount} AZN, Status: {self.status}"
         )
     
     def __str__(self):
-        return f"Sifaris #{self.id} ({self.user.email})"
+        return f"Order #{self.id} ({self.user.email})"
 
     class Meta:
-        verbose_name = "sifaris"
-        verbose_name_plural = "sifarisler"
+        verbose_name = "order"
+        verbose_name_plural = "orders"
         indexes = [
             models.Index(fields=['user', 'is_deleted']),
         ]
@@ -61,34 +68,36 @@ class Order(TimestampMixin, SoftDeleteMixin, models.Model):
 
 class OrderItem(TimestampMixin, SoftDeleteMixin, models.Model):
     """
-    sifaris elementleri
+    Order items
     """
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
         related_name='order_items',
-        verbose_name="Menyu elementi"
+        verbose_name="Menu item"
     )
     menu_item = models.ForeignKey(
         MenuItem,
         on_delete=models.CASCADE,
         related_name='order_items',
-        verbose_name="Menyu elementi"
+        verbose_name="Menu item"
     )
-    quantity = models.PositiveIntegerField(verbose_name="say")
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    verbose_name = "qiymet"
-
+    quantity = models.PositiveIntegerField(verbose_name="quantity")
+    price = models.DecimalField(max_digits=10,
+                                decimal_places=2,
+                                verbose_name="price"
+                                )
+    
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         logging.info(
-            f"sifaris elementi: {self.menu_item.name}, "
-            f"say: {self.quantity}, qiymet: {self.price} AZN"
+            f"Order item: {self.menu_item.name}, "
+            f"Quantity: {self.quantity}, Price: {self.price} AZN"
         )
     
     def __str__(self):
         return f"{self.menu_item.name} x{self.quantity}"
 
     class Meta:
-        verbose_name = "sifaris elementi"
-        verbose_name_plural = "sifaris elementləri"
+        verbose_name = "order item"
+        verbose_name_plural = "order items"

@@ -6,8 +6,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         schedule, _ = CrontabSchedule.objects.get_or_create(
-            minute='0',
-            hour='*/1',  # Hər saat başı
+            minute='*/1',
+            hour='*',  # Hər saat başı
             day_of_week='*',
             day_of_month='*',
             month_of_year='*',
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         )
         PeriodicTask.objects.get_or_create(
             crontab=schedule,
-            name='Check customer points hourly',
+            name='Check customer points accuracy',
             task='project_apps.notifications.tasks.check_customer_points',
         )
         self.stdout.write(self.style.SUCCESS('Periodic tasks setup successfully'))

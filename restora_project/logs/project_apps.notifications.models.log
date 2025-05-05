@@ -16,3 +16,38 @@
 2025-05-03 01:06:03,066 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
 2025-05-03 01:12:22,912 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
 2025-05-03 01:16:07,847 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 02:58:03,478 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 18:16:03,017 - project_apps.notifications.models - INFO - bildiris yaradildi: admikdb@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 18:27:18,742 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 18:29:18,349 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 20:02:30,159 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 20:05:08,744 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-03 20:09:24,665 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 20:52:30,598 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 21:08:58,589 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 21:59:06,467 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emijrov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 21:59:44,883 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emijrov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-03 22:20:31,329 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-03 23:00:01,642 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Təbrikler! Kofe qazandiniz!
+2025-05-04 01:56:01,797 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 17:45:51,891 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 17:57:36,986 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 18:24:18,627 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 19:11:01,348 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 20:13:14,704 - project_apps.notifications.models - INFO - bildiris yaradildi: admin@example.com, basliq: Admin kodunuz
+2025-05-04 21:22:05,571 - project_apps.notifications.models - INFO - bildiris yaradildi: musfikwjen.emirov@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 21:25:52,776 - project_apps.notifications.models - INFO - bildiris yaradildi: admin@example.com, basliq: Yeni Mesaj: musfiq.emirov5@gmail.com
+2025-05-04 21:27:17,679 - project_apps.notifications.models - INFO - bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 21:28:30,384 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Admin kodunuz
+2025-05-04 21:29:19,025 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:15:15,292 - project_apps.notifications.models - INFO - bildiris yaradildi: a@a.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:15:15,311 - project_apps.notifications.models - INFO - bildiris yaradildi: b@b.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:15:22,352 - project_apps.notifications.models - INFO - bildiris yaradildi: b@b.com, basliq: Test mesaj
+2025-05-04 22:15:22,505 - project_apps.notifications.models - INFO - bildiris yaradildi: b@b.com, basliq: Yeni Mesaj: a@a.com
+2025-05-04 22:15:32,149 - project_apps.notifications.models - INFO - bildiris yaradildi: b@b.com, basliq: Test mesaj
+2025-05-04 22:15:35,580 - project_apps.notifications.models - INFO - bildiris yaradildi: b@b.com, basliq: Yeni Mesaj: a@a.com
+2025-05-04 22:19:04,047 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com
+2025-05-04 22:27:55,330 - project_apps.notifications.models - INFO - bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:31:06,474 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:31:38,638 - project_apps.notifications.models - INFO - bildiris yaradildi: ebilebilli3@gmail.com, basliq: Tebrikler siz artiq hesab acdiniz
+2025-05-04 22:35:27,964 - project_apps.notifications.models - INFO - bildiris yaradildi: musfiq.emirov5@gmail.com, basliq: Yeni Mesaj: ebilebilli3@gmail.com

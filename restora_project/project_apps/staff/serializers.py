@@ -26,7 +26,7 @@ class StaffSerializer(serializers.ModelSerializer):
             "updated_at",
             "is_deleted"
         ]
-         # ancaq oxuna biler deyiwdirile bilmez
+        # Read-only fields that cannot be modified
         read_only_fields = [ 
             "id",
             "created_at",
@@ -37,5 +37,5 @@ class StaffSerializer(serializers.ModelSerializer):
     def validate_role(self, value):
         valid_roles = [choice[0] for choice in ROLE_CHOICES]
         if value not in valid_roles:
-            raise serializers.ValidationError("yalniw role deyeri secildi")
+            raise serializers.ValidationError("Invalid role selected")
         return value
