@@ -18,45 +18,47 @@ from project_apps.accounts.serializers import (UserSerializer,
                                                AdminUserCreateSerializer
                                                )
 
+# Set up logger for tracking logs
 logger = logging.getLogger(__name__)
 
-
+# Register View - Handle User Registration
 class RegisterView(APIView):
-    permission_classes = [AllowAny]  # public, hər kəs qeydiyyatdan keçə bilər
+    permission_classes = [AllowAny]  # Public access, anyone can register
 
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             try:
-                # Yeni istifadəçi yaratmaq
+                # Create a new user
                 with transaction.atomic():
                     user = serializer.save()
 
-                    # Token yaratmaq
+                    # Generate JWT tokens
                     refresh = RefreshToken.for_user(user)
                     token_data = {
                         "refresh": str(refresh),
                         "access": str(refresh.access_token),
                     }
 
-                    logger.info(f"Yeni istifadəçi qeydiyyatdan keçdi: {user.email}")
+                    logger.info(f"New user registered: {user.email}")
                     return Response({
                         "user": UserSerializer(user).data,
-                        "token": token_data,  # Token məlumatlarını istifadəçiyə qaytarırıq
-                        "message": "Qeydiyyat uğurla tamamlandı"
+                        "token": token_data,  # Return the token data to the user
+                        "message": "Registration successful"
                     }, status=status.HTTP_201_CREATED)
             except Exception as e:
-                logger.error(f"Qeydiyyat zamanı xəta baş verdi: {str(e)}", exc_info=True)
-                return Response({"error": "Qeydiyyat zamanı xəta baş verdi"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                logger.error(f"Error during registration: {str(e)}", exc_info=True)
+                return Response({"error": "Error during registration"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Profile View - Handle Access to User Profiles
 class ProfileAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # Only authenticated users can access
 
     def get(self, request):
         """
-        admin eger varsa ve giriw edibse profilleri elde ede baxa biler
+        If the user is an admin, they can see all profiles. 
+        Regular users can only see their own profile.
         """
         user = request.user
         if user.role == "admin":
@@ -66,41 +68,40 @@ class ProfileAPIView(APIView):
             profile = get_object_or_404(Profile, user=user, is_deleted=False)
             serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
-@transaction.atomic
-def post(self, request):
-    """
-    yeni profil yaratmag
-    admin admin ucun ve musteri ucun hesab yarada biler
-    """
-    serializer = ProfileSerializer(data=request.data, context={'request': request})
-    if serializer.is_valid():
-        try:
-            serializer.save()
-            logger.info(f"yeni  profil yaradildi: {request.user.email}")
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            logger.error(f"profil yaratma xetasi: {str(e)}", exc_info=True)
-            return Response({'error': 'profil yaratma zamani xeta bas verdi'},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
-                            )
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    @transaction.atomic
+    def post(self, request):
+        """
+        Create a new profile. 
+        Admin can create accounts for both admins and users.
+        """
+        serializer = ProfileSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            try:
+                serializer.save()
+                logger.info(f"New profile created: {request.user.email}")
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            except Exception as e:
+                logger.error(f"Error creating profile: {str(e)}", exc_info=True)
+                return Response({'error': 'Error during profile creation'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                                )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Profile Detail View - Handle Access, Update and Delete for Individual Profiles
 class ProfileDetailAPIView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # Only authenticated users can access
 
     def get(self, request, id):
         """
-        profile baxmag
-        admin istenilen profile baxa biler
-        musterinistenilen prpfile baxa biler
+        View a profile.
+        Admin can view any profile.
+        Regular users can only view their own profile.
         """
         profile = get_object_or_404(Profile, id=id, is_deleted=False)
         user = request.user
         if user.role != 'admin' and profile.user != user:
-            return Response({'error': 'bu profile baxmag icazeniz yoxdur'},
+            return Response({'error': 'You do not have permission to view this profile'},
                             status=status.HTTP_403_FORBIDDEN
                             )
         serializer = ProfileSerializer(profile)
@@ -109,14 +110,14 @@ class ProfileDetailAPIView(APIView):
     @transaction.atomic
     def patch(self, request, id):
         """
-        profili yenilemek
-        -admin istenilen profili yenileye biler
-        musteri yalnis oz profilini yenileye biler
+        Update a profile.
+        Admin can update any profile.
+        Regular users can only update their own profile.
         """
         profile = get_object_or_404(Profile, id=id, is_deleted=False)
         user = request.user
         if user.role != 'admin' and profile.user != user:
-            return Response({'error': 'bu profiliyenilemk icazeniz yoxdur'},
+            return Response({'error': 'You do not have permission to update this profile'},
                             status=status.HTTP_403_FORBIDDEN
                             )
         serializer = ProfileSerializer(profile, data=request.data,
@@ -126,11 +127,11 @@ class ProfileDetailAPIView(APIView):
         if serializer.is_valid():
             try:
                 serializer.save()
-                logger.info(f"profil yenilendi: {profile.user.email}")
+                logger.info(f"Profile updated: {profile.user.email}")
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as e:
-                logger.error(f"profil yenileme xetasi: {str(e)}", exc_info=True)
-                return Response({'error': 'profil yenileme xetasi'},
+                logger.error(f"Error updating profile: {str(e)}", exc_info=True)
+                return Response({'error': 'Error during profile update'},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -138,31 +139,33 @@ class ProfileDetailAPIView(APIView):
     @transaction.atomic
     def delete(self, request, id):
         """
-        profili silmek(sof_delete olaraq ama)
-        admin istenilen profili siler biler
-        musteri yalnis oz profilini sile biler
+        Soft delete a profile.
+        Admin can delete any profile.
+        Regular users can only delete their own profile.
         """
         profile = get_object_or_404(Profile, id=id, is_deleted=False)
         user = request.user
         if user.role != 'admin' and profile.user != user:
-            return Response({'error': 'Bu profili silmek icazeniz yoxdur'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'You do not have permission to delete this profile'},
+                             status=status.HTTP_403_FORBIDDEN)
         try:
-            profile.delete()  # SoftDeleteMixin ile isleyir
-            logger.info(f"profil silindi: {profile.user.email}")
-            return Response({'message': 'profil ugurla silindi.'}, status=status.HTTP_204_NO_CONTENT)
+            profile.delete()  # Soft delete functionality
+            logger.info(f"Profile deleted: {profile.user.email}")
+            return Response({'message': 'Profile successfully deleted.'}, status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
-            logger.error(f"profil silme xetasi: {str(e)}", exc_info=True)
-            return Response({'error': 'profil silme zamani xeta bas verdi '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+            logger.error(f"Error deleting profile: {str(e)}", exc_info=True)
+            return Response({'error': 'Error during profile deletion'},
+                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+# Login View - Handle User Login
 class LoginView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [AllowAny]  # Public access, anyone can log in
 
     def post(self, request):
         """
-        email ve ya parol ile giris
+        Login using email and password.
         """
-        logger.debug(f"login sorgusu ugurla alindi {request.data}")
+        logger.debug(f"Login request received successfully {request.data}")
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             try:
@@ -172,7 +175,7 @@ class LoginView(APIView):
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                 }
-                logger.info(f"user daxil oldu {user.email}")
+                logger.info(f"User logged in: {user.email}")
                 return Response({
                     'user': {
                         'id': user.id,
@@ -183,64 +186,64 @@ class LoginView(APIView):
                     'tokens': token_data
                 }, status=status.HTTP_200_OK)
             except Exception as e:
-                logger.error(f"login xetasi {str(e)}", exc_info=True)
-                return Response({'error': 'giris zamani xeta bas verdi'},
+                logger.error(f"Login error: {str(e)}", exc_info=True)
+                return Response({'error': 'Error during login'},
                                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
                                 )
-        logger.error(f"Serializer xetasi: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+# Logout View - Handle User Logout
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # Only authenticated users can log out
 
     def post(self, request):
         """
-        User üçün logout. Refresh token-i qara siyahıya əlavə edir.
+        Log out the user by adding the refresh token to the blacklist.
         """
-        logger.debug(f"Logout sorğusu alındı: {request.data}")
+        logger.debug(f"Logout request received: {request.data}")
         try:
             refresh_token = request.data.get("refresh")
             if not refresh_token:
-                logger.error("Refresh token daxil edilməyib.")
-                return Response({"error": "Refresh token tələb olunur."},
+                logger.error("Refresh token not provided.")
+                return Response({"error": "Refresh token is required."},
                                 status=status.HTTP_400_BAD_REQUEST
                                 )
-            
+
             token = RefreshToken(refresh_token)
-            token.blacklist()
-            logger.info(f"User çıxış etdi: {request.user.email}")
-            return Response({"message": "ugurla cixis olundu"},
+            token.blacklist()  # Add the token to the blacklist to invalidate it
+            logger.info(f"User logged out: {request.user.email}")
+            return Response({"message": "Successfully logged out"},
                             status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            logger.error(f"Logout xətası: {str(e)}", exc_info=True)
-            return Response({"error": f"Çıxış zamanı xəta baş verdi: {str(e)}"},
+            logger.error(f"Logout error: {str(e)}", exc_info=True)
+            return Response({"error": f"Error during logout: {str(e)}"},
                             status=status.HTTP_400_BAD_REQUEST
                             )
 
+# Admin User Creation View - Handle Creation of New Users by Admins
 class AdminUserCreateView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]  # Only authenticated users can access
 
     def post(self, request):
         """
-        admin terefden yeni user yaratmag
-        ancaq rolesi admin olan
-        giris email username, password,role, first_name, last_name, phone_number, address
-        email signals ile mesaj gedir
+        Admin can create new users.
+        Only users with the 'admin' role can create users.
+        Email, username, password, role, first_name, last_name, phone_number, and address are required.
         """
         if request.user.role != "admin":
-            return Response({"error": "yalniz adminler user yarada biler"},
+            return Response({"error": "Only admins can create users"},
                             status=status.HTTP_403_FORBIDDEN
                             )
-        
+
         serializer = AdminUserCreateSerializer(data=request.data)
         if serializer.is_valid():
             try:
                 with transaction.atomic():
                     user = serializer.save()
-                    logger.info(f"admin yeni user yaratdi: {user.email}, role: {user.role}")
+                    logger.info(f"Admin created new user: {user.email}, role: {user.role}")
                     return Response(serializer.data, status=status.HTTP_201_CREATED)
             except Exception as e:
-                logger.error(f"User yaratma xetasi: {str(e)}", exc_info=True)
-                return Response({"error": "User yaratma zamani xeta bas verdi."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)        
+                logger.error(f"Error creating user: {str(e)}", exc_info=True)
+                return Response({"error": "Error during user creation."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

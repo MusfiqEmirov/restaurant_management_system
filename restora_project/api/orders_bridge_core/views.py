@@ -15,42 +15,42 @@ logger = get_logger(__name__)
 
 
 class OrderView(APIView):
-    # sifarisleirn soyasini detallarini gormek yenilemek silmek ve yaratmg ucun
+    # Viewing, updating, deleting, and creating order details
 
     def get(self, request, order_id=None):
-        # eger giris olunmayibsa
+        # If the user is not authenticated
         if not request.user.is_authenticated:
-            logger.error(f"baxiw ucun icaze lazimdir")
+            logger.error(f"Permission required to view orders")
             return Response(
-                {"error": "sifarisleri gormey ucun giris teleb olunur"},
+                {"error": "Login is required to view orders"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
         user = request.user
         logger.debug(
-            f"sifaris sorgusu alindi: {user.email}, ID: {order_id}, "
-            f"parametrler: {request.query_params}"
+            f"Order query received: {user.email}, ID: {order_id}, "
+            f"parameters: {request.query_params}"
         )
 
         if order_id:
             order = get_object_or_404(Order, id=order_id, is_deleted=False)
             if user.role == "customer" and order.user != user:
                 logger.error(
-                    f"sifarise baxmagcun admin ve ya staff olmag lazimdir{user.email}, sifaris ID: {order_id}"
+                    f"Admin or staff role required to view order: {user.email}, order ID: {order_id}"
                 )
                 return Response(
-                    {"error": "yalniz musteri oz sifarisini gore biler"},
+                    {"error": "Only customers can view their own orders"},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             serializer = OrderSerializer(order)
-            logger.info(f"sifaris detali qaytarildi: ID {order_id}")
+            logger.info(f"Order details returned: ID {order_id}")
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         orders = Order.objects.filter(is_deleted=False)
-        # eger istifadeci musteridirse
+        # If the user is a customer
         if user.role == "customer":
             orders = orders.filter(user=user)
-            #ger istifadeci admindirse
+        # If the user is an admin
         elif user.role == "admin" and request.query_params:
             filter_serializer = SalesReportSerializer(data=request.query_params)
             if filter_serializer.is_valid():
@@ -58,49 +58,49 @@ class OrderView(APIView):
                 end_date = filter_serializer.validated_data.get("end_date")
                 payment_type = filter_serializer.validated_data.get("payment_type")
 
-                # baslangic tarix
+                # Filter by start date
                 if start_date:
                     orders = orders.filter(created_at__date__gte=start_date)
-                    #son tarix
+                # Filter by end date
                 if end_date:
                     orders = orders.filter(created_at__date__lte=end_date)
-                    #ondeis novune gore
+                # Filter by payment type
                 if payment_type:
                     orders = orders.filter(payment_type=payment_type)
             else:
-                logger.error(f"filter analiz xetasi: {filter_serializer.errors}")
+                logger.error(f"Filter validation error: {filter_serializer.errors}")
                 return Response(
                     filter_serializer.errors, status=status.HTTP_400_BAD_REQUEST
                 )
 
         serializer = OrderSerializer(orders, many=True)
-        logger.info(f"sifarislerin siyahisi qaytarildi: say: {orders.count()}")
+        logger.info(f"List of orders returned: count: {orders.count()}")
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        # sifaris ancaq admin ve staff terefinnen yaradila biler
+        # Orders can only be created by admins or staff
         if not request.user.is_authenticated:
-            logger.error(f"icazesiz yaratma cehdi: Qonaq")
+            logger.error(f"Unauthorized attempt to create: Guest")
             return Response(
-                {"error": "sifaris yaratmagcun giriw teleb olunur"},
+                {"error": "Login is required to create orders"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         if request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"giriw ucun icaze lazimdir: {request.user.email}, rol: {request.user.role}"
+                f"Permission required for login: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "yalniz admin ve staf sifaris yarada biler"},
+                {"error": "Only admins and staff can create orders"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         data = request.data.copy()
 
-        # musteri id daxil edilmezse
+        # If the customer ID is not provided
         if "user_id" not in data:
-            logger.error(f"musteri idsi daxil edilmeyib: {request.user.email}")
+            logger.error(f"Customer ID not provided: {request.user.email}")
             return Response(
-                {"error": "sifaris ucun musteri idsi teleb olunur."},
+                {"error": "Customer ID is required to create an order."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         data["created_by_id"] = request.user.id
@@ -109,28 +109,28 @@ class OrderView(APIView):
         if serializer.is_valid():
             order = serializer.save()
             logger.info(
-                f"sifaris idisi yaradildi: ID {order.id}, "
-                f"musteri: {order.user.email}, yaradan: {request.user.email}"
+                f"Order created: ID {order.id}, "
+                f"customer: {order.user.email}, created by: {request.user.email}"
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        logger.error(f"Serializer xetasi: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, order_id=None):
-        # sifaris ancaq admin ve staff terefinnen yenilene biler
+        # Orders can only be updated by admins or staff
         if not order_id:
-            logger.error("sifaris idisi daxil edilmeyib")
+            logger.error("Order ID not provided")
             return Response(
-                {"error": "sifarisidis teleb olunur."},
+                {"error": "Order ID is required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if not request.user.is_authenticated or request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"yenilemek ucun giriw lazimdir {request.user.email if request.user.is_authenticated else 'Qonaq'}, "
-                f"rol: {request.user.role if request.user.is_authenticated else 'Yoxdur'}"
+                f"Permission required to update: {request.user.email if request.user.is_authenticated else 'Guest'}, "
+                f"role: {request.user.role if request.user.is_authenticated else 'None'}"
             )
             return Response(
-                {"error": "yalniz admin ve ya staff yenileye biler"},
+                {"error": "Only admins or staff can update orders"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -141,28 +141,28 @@ class OrderView(APIView):
         if serializer.is_valid():
             serializer.save()
             logger.info(
-                f"sifaris yenilendi: ID {order.id}, "
-                f"musteri: {order.user.email}, yeniyelen: {request.user.email}"
+                f"Order updated: ID {order.id}, "
+                f"customer: {order.user.email}, updated by: {request.user.email}"
             )
             return Response(serializer.data, status=status.HTTP_200_OK)
-        logger.error(f"Serializer xetasi: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, order_id=None):
-        # ancaq admin sile biler
+        # Only admin can delete
         if not order_id:
-            logger.error("sifaris daxil edilmeyib")
+            logger.error("Order not provided")
             return Response(
-                {"error": "id teleb olunur sifaris ucun."},
+                {"error": "Order ID is required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if not request.user.is_authenticated or request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"silmek ucun firiw tmeyniz xahis olunur {request.user.email if request.user.is_authenticated else 'Qonaq'}, "
-                f"rol: {request.user.role if request.user.is_authenticated else 'Yoxdur'}"
+                f"Permission required to delete: {request.user.email if request.user.is_authenticated else 'Guest'}, "
+                f"role: {request.user.role if request.user.is_authenticated else 'None'}"
             )
             return Response(
-                {"error": "yalniz admin sile biler"},
+                {"error": "Only admins can delete orders"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -170,55 +170,55 @@ class OrderView(APIView):
         if request.user.role == "admin":
             order.delete()
             logger.info(
-                f"sifaris bir basa sikindi: ID {order.id}, "
-                f"müştərmusterii: {order.user.email}, admin: {request.user.email}"
+                f"Order permanently deleted: ID {order.id}, "
+                f"customer: {order.user.email}, admin: {request.user.email}"
             )
             return Response(
-                {"message": "sifaris tamamile silindi"},
+                {"message": "Order permanently deleted"},
                 status=status.HTTP_200_OK,
             )
         else:  # staff
             order.is_deleted = True
             order.save()
             logger.info(
-                f"sifaris soft silindi: ID {order.id}, "
-                f"musteri: {order.user.email}, staff: {request.user.email}"
+                f"Order soft deleted: ID {order.id}, "
+                f"customer: {order.user.email}, staff: {request.user.email}"
             )
             return Response(
-                {"message": "sifaris soft silindi."},
+                {"message": "Order soft deleted."},
                 status=status.HTTP_200_OK,
             )
 
 
 class OrderItemView(APIView):
-    # sifaris elementlerinin siyahisi yenilenmesi silinmesi ve yaranamsi
+    # Listing, updating, deleting, and creating order items
 
     def get(self, request, item_id=None):
-       # #sifaris elmentlernin siyashini qaytarrir
+        # Returning the list of order items
         if not request.user.is_authenticated:
-            logger.error(f"icaze yoxdur: Qonaq")
+            logger.error(f"Permission required: Guest")
             return Response(
-                {"error": "giris edin sifarisleri gormey ucun"},
+                {"error": "Login required to view order items"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
         user = request.user
         logger.debug(
-            f"sifarislerin sorgusu alindi: {user.email}, ID: {item_id}"
+            f"Order item query received: {user.email}, ID: {item_id}"
         )
 
         if item_id:
             item = get_object_or_404(OrderItem, id=item_id, is_deleted=False)
             if user.role == "customer" and item.order.user != user:
                 logger.error(
-                    f"giris etmeden baxmag olmaz oz sifarislerinize: {user.email}, element ID: {item_id}"
+                    f"Cannot view others' orders: {user.email}, item ID: {item_id}"
                 )
                 return Response(
-                    {"error": "yalniz oz sifarislerinize bxa bilersiz."},
+                    {"error": "You can only view your own orders."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             serializer = OrderItemSerializer(item)
-            logger.info(f"sifarislerinize baxa bilersiz ID {item_id}")
+            logger.info(f"Order item details returned: ID {item_id}")
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         items = OrderItem.objects.filter(is_deleted=False)
@@ -226,23 +226,23 @@ class OrderItemView(APIView):
         if user.role == "customer":
             items = items.filter(order__user=user)
         serializer = OrderItemSerializer(items, many=True)
-        logger.info(f"sifarislerin siyahisi yaradildi: say: {items.count()}")
+        logger.info(f"List of order items returned: count: {items.count()}")
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        # yeni sifaris elementi yaratmag ancaq admin ve staff ile
+        # Creating new order item only by admins or staff
         if not request.user.is_authenticated:
-            logger.error(f"icaze yoxdur musteri ucun: Qonaq")
+            logger.error(f"Permission required for customer: Guest")
             return Response(
-                {"error": "sifaris elementleri ucun giris edin"},
+                {"error": "Login required to create order items"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
         if request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"giris ucun icaze lamzidir: {request.user.email}, rol: {request.user.role}"
+                f"Permission required for login: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "yalniz admin ve staff yarada biler"},
+                {"error": "Only admins and staff can create order items"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -250,28 +250,28 @@ class OrderItemView(APIView):
         if serializer.is_valid():
             item = serializer.save()
             logger.info(
-                f"sifaris elementi yaradildi: ID {item.id}, "
-                f"menyu: {item.menu_item.name}, yaradan: {request.user.email}"
+                f"Order item created: ID {item.id}, "
+                f"menu item: {item.menu_item.name}, created by: {request.user.email}"
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        logger.error(f"Serializer xetasi: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, item_id=None):
-        # sifaris elementlerini yelilemek hemcini admin ve staff ile
+        # Updating order items only by admins or staff
         if not item_id:
-            logger.error("sifaris ucun id lazimdir")
+            logger.error("Order item ID is required")
             return Response(
-                {"error": "sifrais elementleri ucun Id lazimdir"},
+                {"error": "Order item ID is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if not request.user.is_authenticated or request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"icazeniz yoxdur yenielemk ucun {request.user.email if request.user.is_authenticated else 'Qonaq'}, "
-                f"rol: {request.user.role if request.user.is_authenticated else 'Yoxdur'}"
+                f"Permission required to update: {request.user.email if request.user.is_authenticated else 'Guest'}, "
+                f"role: {request.user.role if request.user.is_authenticated else 'None'}"
             )
             return Response(
-                {"error": "yalniz admin ve ya staff yenileye biler."},
+                {"error": "Only admins or staff can update order items."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -282,28 +282,28 @@ class OrderItemView(APIView):
         if serializer.is_valid():
             serializer.save()
             logger.info(
-                f"sifaris elementleri yneilendi: ID {item.id}, "
-                f"menyu: {item.menu_item.name}, yenileyen: {request.user.email}"
+                f"Order item updated: ID {item.id}, "
+                f"menu item: {item.menu_item.name}, updated by: {request.user.email}"
             )
             return Response(serializer.data, status=status.HTTP_200_OK)
-        logger.error(f"Serializer xetasi: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, item_id=None):
-        # sifaris elementlerini silen admin ve ya staff
+        # Deleting order items by admin or staff
         if not item_id:
-            logger.error("ID daxil edilmeyib")
+            logger.error("Order item ID not provided")
             return Response(
-                {"error": "sifaris silmek ucun id lazimdir"},
+                {"error": "Order item ID is required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if not request.user.is_authenticated or request.user.role not in ["admin", "staff"]:
             logger.error(
-                f"iczae yoxdur silmek ucun{request.user.email if request.user.is_authenticated else 'Qonaq'}, "
-                f"rol: {request.user.role if request.user.is_authenticated else 'Yoxdur'}"
+                f"Permission required to delete: {request.user.email if request.user.is_authenticated else 'Guest'}, "
+                f"role: {request.user.role if request.user.is_authenticated else 'None'}"
             )
             return Response(
-                {"error": "yalniz admin ve ya staff sile biler."},
+                {"error": "Only admins or staff can delete order items."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -311,44 +311,44 @@ class OrderItemView(APIView):
         if request.user.role == "admin":
             item.delete()
             logger.info(
-                f"sifaris elementleri silindi: ID {item.id}, "
-                f"menyu: {item.menu_item.name}, admin: {request.user.email}"
+                f"Order item deleted: ID {item.id}, "
+                f"menu item: {item.menu_item.name}, admin: {request.user.email}"
             )
             return Response(
-                {"message": "sifaris elementleri silindi"},
+                {"message": "Order item deleted"},
                 status=status.HTTP_200_OK,
             )
         else:  # staff
             item.is_deleted = True
             item.save()
             logger.info(
-                f"sifaris elmeentleri soft silindi: ID {item.id}, "
-                f"menyu: {item.menu_item.name}, staff: {request.user.email}"
+                f"Order item soft deleted: ID {item.id}, "
+                f"menu item: {item.menu_item.name}, staff: {request.user.email}"
             )
             return Response(
-                {"message": "sifaris elementleri soft silindi"},
+                {"message": "Order item soft deleted"},
                 status=status.HTTP_200_OK,
             )
 
 
 class SalesReportView(APIView):
-    # satis hesabatlarina baxmag ve filter elemek
+    # Viewing and filtering sales reports
 
     def get(self, request):
-        # satis hesabatniin qaytarir
+        # Returning the sales report
         if not request.user.is_authenticated or request.user.role != "admin":
             logger.error(
-                f"giris ucunicaze yoxdur: {request.user.email if request.user.is_authenticated else 'Qonaq'}, "
-                f"rol: {request.user.role if request.user.is_authenticated else 'Yoxdur'}"
+                f"Permission required to view report: {request.user.email if request.user.is_authenticated else 'Guest'}, "
+                f"role: {request.user.role if request.user.is_authenticated else 'None'}"
             )
             return Response(
-                {"error": "hesabata ancaq adminler bxa biler"},
+                {"error": "Only admins can view sales reports"},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         serializer = SalesReportSerializer(data=request.query_params)
         if not serializer.is_valid():
-            logger.error(f"hesabat serializer xetasi {serializer.errors}")
+            logger.error(f"Report serializer error {serializer.errors}")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         data = serializer.validated_data
@@ -379,7 +379,7 @@ class SalesReportView(APIView):
         }
 
         logger.info(
-            f"satis hesabati hazirdi tarix {start_date} - {end_date}, "
-            f"öodenis novu: {payment_type or 'hamisi'}, admin: {request.user.email}"
+            f"Sales report prepared for date range {start_date} - {end_date}, "
+            f"payment type: {payment_type or 'all'}, admin: {request.user.email}"
         )
         return Response(report_data, status=status.HTTP_200_OK)

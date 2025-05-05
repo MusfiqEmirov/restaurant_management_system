@@ -1,6 +1,5 @@
 from rest_framework import serializers
-
-from .models import *
+from .models import BonusTransaction
 from project_apps.accounts.serializers import UserSerializer
 from project_apps.accounts.models import User
 from project_apps.orders.serializers import OrderSerializer
@@ -36,20 +35,20 @@ class BonusTransactionSerializer(serializers.ModelSerializer):
             "updated_at",
             "is_deleted",
         ]
-         # ancaq oxuna biler deyiwdirile bilmez
-        read_only_fields = [ 
+        # Read-only fields that cannot be modified
+        read_only_fields = [
             "id",
             "created_at",
             "updated_at",
             "is_deleted"
         ]
 
-        def validate_points(self, value):
-            if value == 0:
-                raise serializers.ValidationError("Xallar sifir ola bilmez")
-            return value
+    def validate_points(self, value):
+        if value == 0:
+            raise serializers.ValidationError("Points cannot be zero.")
+        return value
 
-        def validate_description(self, value):
-            if not value.strip():
-                raise serializers.ValidationError("tesvir bow olmamalidir")
-            return value
+    def validate_description(self, value):
+        if not value.strip():
+            raise serializers.ValidationError("Description cannot be empty.")
+        return value

@@ -15,51 +15,50 @@ from project_apps.orders.models import Order
 
 logger = get_logger(__name__)
 
-
 class CustomerView(APIView):
-    # Müştərilərin siyahısı, detalı, yaradılması, yenilənməsi və silinməsi.
+    # List, detail, creation, update, and deletion of customers.
     permission_classes = [IsAuthenticated]
 
     def get(self, request, customer_id=None):
-        # Müştəri siyahısını və ya detalını qaytarır.
+        # Returns the customer list or details.
         user = request.user
         logger.debug(
-            f"Müştəri sorğusu alındı: {user.email}, ID: {customer_id}"
+            f"Customer request received: {user.email}, ID: {customer_id}"
         )
 
         if customer_id:
             customer = get_object_or_404(User, id=customer_id, is_deleted=False, role="customer")
             if user.role == "customer" and customer != user:
                 logger.error(
-                    f"İcazəsiz müştəri baxışı: {user.email}, müştəri ID: {customer_id}"
+                    f"Unauthorized customer view attempt: {user.email}, customer ID: {customer_id}"
                 )
                 return Response(
-                    {"error": "Yalnız öz məlumatlarınızı görə bilərsiniz."},
+                    {"error": "You can only view your own data."},
                     status=status.HTTP_403_FORBIDDEN,
                 )
             serializer = UserSerializer(customer)
-            logger.info(f"Müştəri detalı qaytarıldı: ID {customer_id}")
+            logger.info(f"Customer details returned: ID {customer_id}")
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         if user.role not in ["admin", "staff"]:
             customer = get_object_or_404(User, id=user.id, is_deleted=False, role="customer")
             serializer = UserSerializer(customer)
-            logger.info(f"Öz müştəri məlumatları qaytarıldı: {user.email}")
+            logger.info(f"Own customer data returned: {user.email}")
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         customers = User.objects.filter(is_deleted=False, role="customer")
         serializer = UserSerializer(customers, many=True)
-        logger.info(f"Müştəri siyahısı qaytarıldı: say: {customers.count()}")
+        logger.info(f"Customer list returned: count: {customers.count()}")
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        # Yeni müştəri yaradır (yalnız admin).
+        # Creates a new customer (only admin).
         if request.user.role != "admin":
             logger.error(
-                f"İcazəsiz yaratma cəhdi: {request.user.email}, rol: {request.user.role}"
+                f"Unauthorized creation attempt: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "Yalnız adminlər müştəri yarada bilər."},
+                {"error": "Only admins can create customers."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -67,36 +66,36 @@ class CustomerView(APIView):
         if serializer.is_valid():
             customer = serializer.save(role="customer")
             logger.info(
-                f"Müştəri yaradıldı: ID {customer.id}, email: {customer.email}"
+                f"Customer created: ID {customer.id}, email: {customer.email}"
             )
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        logger.error(f"Serializer xətası: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, customer_id=None):
-        # Müştərini yeniləyir.
+        # Updates a customer.
         if not customer_id:
-            logger.error("Müştəri ID daxil edilməyib.")
+            logger.error("Customer ID not provided.")
             return Response(
-                {"error": "Müştəri ID tələb olunur."},
+                {"error": "Customer ID is required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         user = request.user
         customer = get_object_or_404(User, id=customer_id, is_deleted=False, role="customer")
         if user.role == "customer" and customer != user:
             logger.error(
-                f"İcazəsiz yeniləmə cəhdi: {user.email}, müştəri ID: {customer_id}"
+                f"Unauthorized update attempt: {user.email}, customer ID: {customer_id}"
             )
             return Response(
-                {"error": "Yalnız öz məlumatlarınızı yeniləyə bilərsiniz."},
+                {"error": "You can only update your own data."},
                 status=status.HTTP_403_FORBIDDEN,
             )
         if user.role not in ["admin", "customer"]:
             logger.error(
-                f"İcazəsiz yeniləmə cəhdi: {user.email}, rol: {user.role}"
+                f"Unauthorized update attempt: {user.email}, role: {user.role}"
             )
             return Response(
-                {"error": "Yalnız admin və ya müştəri yeniləyə bilər."},
+                {"error": "Only admins or customers can update."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
@@ -106,60 +105,60 @@ class CustomerView(APIView):
         if serializer.is_valid():
             serializer.save()
             logger.info(
-                f"Müştəri yeniləndi: ID {customer.id}, email: {customer.email}"
+                f"Customer updated: ID {customer.id}, email: {customer.email}"
             )
             return Response(serializer.data, status=status.HTTP_200_OK)
-        logger.error(f"Serializer xətası: {serializer.errors}")
+        logger.error(f"Serializer error: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, customer_id=None):
-        """Müştərini silir (yalnız admin)."""
+        """Deletes a customer (only admin)."""
         if not customer_id:
-            logger.error("Müştəri ID daxil edilməyib.")
+            logger.error("Customer ID not provided.")
             return Response(
-                {"error": "Müştəri ID tələb olunur."},
+                {"error": "Customer ID is required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
         if request.user.role != "admin":
             logger.error(
-                f"İcazəsiz silmə cəhdi: {request.user.email}, rol: {request.user.role}"
+                f"Unauthorized deletion attempt: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "Yalnız adminlər müştəriləri silə bilər."},
+                {"error": "Only admins can delete customers."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         customer = get_object_or_404(User, id=customer_id, is_deleted=False, role="customer")
         customer.delete()
         logger.info(
-            f"Müştəri silindi: ID {customer.id}, email: {customer.email}"
+            f"Customer deleted: ID {customer.id}, email: {customer.email}"
         )
         return Response(
-            {"message": "Müştəri silindi."},
+            {"message": "Customer deleted."},
             status=status.HTTP_200_OK,
         )
 
 
 class CustomerDiscountCodeView(APIView):
-    """Endirim kodlarının yoxlanılması (70% və 20%)."""
+    """Checking discount codes (70% and 20%)."""
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        """Endirim kodunu yoxlayır."""
+        """Checks the discount code."""
         if request.user.role != "customer":
             logger.error(
-                f"İcazəsiz endirim kodu cəhdi: {request.user.email}, rol: {request.user.role}"
+                f"Unauthorized discount code attempt: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "Yalnız müştərilər endirim kodu istifadə edə bilər."},
+                {"error": "Only customers can use discount codes."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         code = request.data.get("code")
         if not code:
-            logger.error(f"Endirim kodu daxil edilməyib: {request.user.email}")
+            logger.error(f"Discount code not provided: {request.user.email}")
             return Response(
-                {"error": "Endirim kodu tələb olunur."},
+                {"error": "Discount code is required."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -167,26 +166,26 @@ class CustomerDiscountCodeView(APIView):
             code=code, user=request.user, is_deleted=False, is_used=False
         ).first()
         if not discount:
-            logger.error(f"Endirim kodu yanlışdır: {request.user.email}, kod: {code}")
+            logger.error(f"Invalid discount code: {request.user.email}, code: {code}")
             return Response(
-                {"error": "Endirim kodu yanlışdır və ya istifadə olunub."},
+                {"error": "Discount code is invalid or already used."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         discount_percentage = 20.00
-        if discount.notification and discount.notification.title == "İlk Sifarişə 70% Endirim":
+        if discount.notification and discount.notification.title == "70% Discount on First Order":
             if Order.objects.filter(user=request.user, is_deleted=False).exists():
-                logger.error(f"İlk sifariş deyil: {request.user.email}")
+                logger.error(f"Not the first order: {request.user.email}")
                 return Response(
-                    {"error": "70% endirim kodu yalnız ilk sifariş üçün keçərlidir."},
+                    {"error": "The 70% discount code is only valid for the first order."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             discount_percentage = 70.00
 
-        logger.info(f"Endirim kodu qəbul olundu: {request.user.email}, kod: {code}")
+        logger.info(f"Discount code accepted: {request.user.email}, code: {code}")
         return Response(
             {
-                "message": "Endirim kodu qəbul olundu. Sifariş yaradarkən istifadə edin.",
+                "message": "Discount code accepted. Use it when placing an order.",
                 "code": code,
                 "discount_percentage": discount_percentage
             },
@@ -195,26 +194,26 @@ class CustomerDiscountCodeView(APIView):
 
 
 class BonusRedeemView(APIView):
-    """Bonus xalları ilə kofe hədiyyəsi."""
+    """Free coffee with bonus points."""
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        """Kofe hədiyyəsi tələb edir."""
+        """Requests a free coffee gift."""
         if request.user.role != "customer":
             logger.error(
-                f"İcazəsiz xərcləmə cəhdi: {request.user.email}, rol: {request.user.role}"
+                f"Unauthorized spend attempt: {request.user.email}, role: {request.user.role}"
             )
             return Response(
-                {"error": "Yalnız müştərilər bonus xallarını xərcləyə bilər."},
+                {"error": "Only customers can redeem bonus points."},
                 status=status.HTTP_403_FORBIDDEN,
             )
 
         user = request.user
         action = request.data.get("action")
         if action != "coffee":
-            logger.error(f"Yanlış aksiya: {user.email}, aksiya: {action}")
+            logger.error(f"Invalid action: {user.email}, action: {action}")
             return Response(
-                {"error": "Aksiya 'coffee' olmalıdır."},
+                {"error": "The action must be 'coffee'."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -222,25 +221,25 @@ class BonusRedeemView(APIView):
         total_points = bonus_points.points if bonus_points else 0
         if total_points < 5:
             logger.error(
-                f"Kifayət qədər xal yoxdur: {user.email}, xallar: {total_points}"
+                f"Not enough points: {user.email}, points: {total_points}"
             )
             return Response(
-                {"error": "Pulsuz kofe üçün minimum 5 xal tələb olunur."},
+                {"error": "At least 5 points are required for a free coffee."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         BonusTransaction.objects.create(
             user=user,
             points=-5,
-            description="Pulsuz kofe hədiyyəsi",
+            description="Free coffee gift",
             order=None
         )
         bonus_points.points -= 5
         bonus_points.save()
         logger.info(
-            f"Pulsuz kofe hədiyyəsi: müştəri: {user.email}, xallar: -5"
+            f"Free coffee gift: customer: {user.email}, points: -5"
         )
         return Response(
-            {"message": "Pulsuz kofe hədiyyəsi uğurla əldə edildi."},
+            {"message": "Free coffee gift successfully redeemed."},
             status=status.HTTP_200_OK,
         )

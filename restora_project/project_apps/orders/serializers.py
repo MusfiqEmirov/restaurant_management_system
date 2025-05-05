@@ -3,7 +3,6 @@ from django.db.models import Sum
 from django.utils import timezone
 import uuid
 
-
 from project_apps.customers.models import BonusTransaction
 from project_apps.notifications.models import BonusPoints
 from .models import Order, OrderItem
@@ -16,7 +15,6 @@ from project_apps.notifications.models import DiscountCode, Notification
 from project_apps.core.logging import get_logger
 
 logger = get_logger(__name__)
-
 
 class OrderItemSerializer(serializers.ModelSerializer):
     menu_item = MenuItemSerializer(read_only=True)
@@ -38,8 +36,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
             "updated_at",
             "is_deleted",
         ]
-         # ancaq oxuna biler deyiwdirile bilmez
-        read_only_fields = [ 
+        # Read-only fields that cannot be modified
+        read_only_fields = [
             "id",
             "created_at",
             "updated_at",
@@ -48,11 +46,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
     
     def validate_quantity(self, value):
         if value <= 0:
-            raise serializers.ValidationError("say hemiwe musbet olmalidir")
+            raise serializers.ValidationError("Quantity must always be positive")
         return value
-    
-    
-        
 
 class OrderSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -94,7 +89,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "is_deleted",
             "discount_code",
         ]
-         # ancaq oxuna biler deyiwdirile bilmez
+        # Read-only fields that cannot be modified
         read_only_fields = [ 
             "id",
             "created_at",
@@ -105,13 +100,13 @@ class OrderSerializer(serializers.ModelSerializer):
     def validate_status(self, value):
         valid_statuses = [choice[0] for choice in STATUS_CHOICES]
         if value not in valid_statuses:
-            raise serializers.ValidationError("yalniw status deyeri")
+            raise serializers.ValidationError("Invalid status value")
         return value
 
     def validate_payment_type(self, value):
         valid_payment_types = [choice[0] for choice in PAYMENT_TYPE_CHOICES]
         if value not in valid_payment_types:
-            raise serializers.ValidationError("yalniw odenis novu daxil etdiniz")
+            raise serializers.ValidationError("Invalid payment type entered")
         return value
     
     def create(self, validated_data):
@@ -124,23 +119,23 @@ class OrderSerializer(serializers.ModelSerializer):
         for item_data in order_items_data:
             total_amount += item_data["quantity"] * item_data["menu_item"].get_discounted_price()
 
-        # Endirim kodu tətbiqi
+        # Applying discount code
         discount_percentage = 0
         if discount_code:
             discount = DiscountCode.objects.filter(
                 code=discount_code, is_deleted=False, is_used=False
             ).first()
             if not discount:
-                raise serializers.ValidationError("Endirim kodu yanlışdır və ya istifadə olunub.")
+                raise serializers.ValidationError("Invalid or already used discount code.")
             if discount.user != validated_data.get("user"):
-                raise serializers.ValidationError("Bu endirim kodu sizin üçün deyil.")
-            if discount.notification and discount.notification.title == "İlk Sifarişə 70% Endirim":
+                raise serializers.ValidationError("This discount code is not for you.")
+            if discount.notification and discount.notification.title == "70% Discount for First Order":
                 if Order.objects.filter(user=validated_data.get("user"), is_deleted=False).exists():
                     raise serializers.ValidationError(
-                        "70% endirim kodu yalnız ilk sifariş üçün keçərlidir."
+                        "The 70% discount code is only valid for the first order."
                     )
                 discount_percentage = 70.00
-            elif discount.notification and discount.notification.title == "50 AZN Sifariş Endirimi":
+            elif discount.notification and discount.notification.title == "50 AZN Order Discount":
                 discount_percentage = 20.00
             else:
                 discount_percentage = 20.00
@@ -148,9 +143,9 @@ class OrderSerializer(serializers.ModelSerializer):
             discount.is_used = True
             discount.save()
             logger.info(
-                f"{discount_percentage}% endirim tətbiq olundu: "
-                f"müştəri: {discount.user.email}, kod: {discount.code}, "
-                f"yeni məbləğ: {total_amount} AZN"
+                f"{discount_percentage}% discount applied: "
+                f"Customer: {discount.user.email}, Code: {discount.code}, "
+                f"New amount: {total_amount} AZN"
             )
 
         validated_data["total_amount"] = total_amount
@@ -164,14 +159,14 @@ class OrderSerializer(serializers.ModelSerializer):
                 price=item_data["menu_item"].get_discounted_price(),
             )
 
-        # Bonus xalları
+        # Bonus points
         bonus_points = 0
         if total_amount >= 50:
             bonus_points = 5
             BonusTransaction.objects.create(
                 user=order.user,
                 points=bonus_points,
-                description="50 AZN sifarişdən qazanılan bonus",
+                description="Bonus earned from 50 AZN order",
                 order=order
             )
             bonus_obj, created = BonusPoints.objects.get_or_create(
@@ -182,21 +177,21 @@ class OrderSerializer(serializers.ModelSerializer):
                 bonus_obj.points += bonus_points
                 bonus_obj.save()
             logger.info(
-                f"Bonus qazanıldı: ID {order.id}, "
-                f"müştəri: {order.user.email}, xallar: {bonus_points}"
+                f"Bonus earned: ID {order.id}, "
+                f"Customer: {order.user.email}, Points: {bonus_points}"
             )
 
-        # 50 AZN endirim kodu
+        # 50 AZN discount code
         if total_amount >= 50:
             discount_code = str(uuid.uuid4())[:8]
             notification = Notification.objects.create(
                 user=order.user,
-                title="50 AZN Sifariş Endirimi",
+                title="50 AZN Order Discount",
                 message=(
-                    f"Hörmətli {order.user.email},\n\n"
-                    f"50 AZN və ya daha çox sifariş etdiyiniz üçün 20% endirim kodu qazandınız!\n"
-                    f"Kod: {discount_code}\n"
-                    f"Növbəti sifarişinizdə istifadə edə bilərsiniz."
+                    f"Dear {order.user.email},\n\n"
+                    f"You earned a 20% discount code for orders of 50 AZN or more!\n"
+                    f"Code: {discount_code}\n"
+                    f"You can use it for your next order."
                 ),
                 sent_at=timezone.now()
             )
@@ -206,21 +201,21 @@ class OrderSerializer(serializers.ModelSerializer):
                 notification=notification
             )
             send_email_task.delay(
-                subject="50 AZN Sifarişinizə Görə Endirim Kodu!",
+                subject="Discount Code for Your 50 AZN Order!",
                 message=notification.message,
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[order.user.email]
             )
             logger.info(
-                f"50 AZN endirim kodu göndərildi: müştəri: {order.user.email}, kod: {discount_code}"
+                f"50 AZN discount code sent: Customer: {order.user.email}, Code: {discount_code}"
             )
 
         logger.info(
-            f"Sifariş yaradıldı: ID {order.id}, "
-            f"müştəri: {order.user.email}, məbləğ: {order.total_amount} AZN"
+            f"Order created: ID {order.id}, "
+            f"Customer: {order.user.email}, Amount: {order.total_amount} AZN"
         )
         return order
-        
+
 
 class SalesReportSerializer(serializers.Serializer):
     start_date = serializers.DateField(required=True)
@@ -233,7 +228,5 @@ class SalesReportSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['start_date'] > data['end_date']:
-            raise serializers.ValidationError("bawlangic tariwi bitiw tarixinnen boyuk ola bilmez")
+            raise serializers.ValidationError("Start date cannot be greater than end date")
         return data
-
-    

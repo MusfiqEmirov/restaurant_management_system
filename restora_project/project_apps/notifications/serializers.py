@@ -5,12 +5,11 @@ from .models import (Notification,
                      BonusPoints,
                      AdminCode,
                      Message,
-                     
                      )
 from project_apps.accounts.serializers import UserSerializer
 from project_apps.accounts.models import User
 from project_apps.orders.models import Order, OrderItem
-from project_apps.orders.serializers import OrderItemSerializer,OrderSerializer
+from project_apps.orders.serializers import OrderItemSerializer, OrderSerializer
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -35,8 +34,7 @@ class NotificationSerializer(serializers.ModelSerializer):
             "updated_at",
             "is_deleted"
         ]
-         # ancaq oxuna biler deyiwdirile bilmez
-        read_only_fields = [ 
+        read_only_fields = [
             "id",
             "created_at",
             "updated_at",
@@ -45,14 +43,14 @@ class NotificationSerializer(serializers.ModelSerializer):
 
     def validate_title(self, value):
         if not value.strip():
-            raise serializers.ValidationError("basliq bow olmamalidir")
+            raise serializers.ValidationError("Title cannot be empty")
         return value
 
     def validate_message(self, value):
         if not value.strip():
-            raise serializers.ValidationError("mesaj bow ola bilmez")
+            raise serializers.ValidationError("Message cannot be empty")
         return value
-    
+
 
 class DiscountCodeSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -93,25 +91,25 @@ class DiscountCodeSerializer(serializers.ModelSerializer):
 
     def validate_code(self, value):
         if not value:
-            raise serializers.ValidationError("Kod bos ola bilmez")
+            raise serializers.ValidationError("Code cannot be empty")
         return value
 
     def validate_is_used(self, value):
         if self.instance and self.instance.is_used and not value:
-            raise serializers.ValidationError("bu kod bir defe istifade olunub tekrar istifad eeleemk olmaz")
+            raise serializers.ValidationError("This code has been used once and cannot be used again.")
         return value
     
     def validate(self, data):
         user = data.get("user")
         notification = data.get("notification")
-        if notification and notification.title == "İlk Sifarişə 70% Endirim":
+        if notification and notification.title == "70% Discount on First Order":
             if Order.objects.filter(user=user, is_deleted=False).exists():
                 raise serializers.ValidationError(
-                    "70% endirim kodu yalnız ilk sifariş üçün keçərlidir."
+                    "The 70% discount code is only valid for the first order."
                 )
         return data
-    
-    
+
+
 class BonusPointsSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(
@@ -149,13 +147,13 @@ class BonusPointsSerializer(serializers.ModelSerializer):
 
     def validate_points(self, value):
         if value < 0:
-            raise serializers.ValidationError("Xallar menfi ola bilmez")
+            raise serializers.ValidationError("Points cannot be negative")
         return value
 
     def validate_last_notified_points(self, value):
         if value < 0:
-            raise serializers.ValidationError("Son bildiriw xallar menfi ola bilmez")
-        return value    
+            raise serializers.ValidationError("Last notified points cannot be negative")
+        return value
 
 
 class AdminCodeSerializer(serializers.ModelSerializer):
@@ -189,9 +187,9 @@ class AdminCodeSerializer(serializers.ModelSerializer):
 
     def validate_code(self, value):
         if not value:
-            raise serializers.ValidationError("Kod bow ola bilmez")
+            raise serializers.ValidationError("Code cannot be empty")
         return value
-    
+
 
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.PrimaryKeyRelatedField(
@@ -225,9 +223,9 @@ class MessageSerializer(serializers.ModelSerializer):
         sender = self.context['request'].user
         recipient = data.get('recipient')
         if sender == recipient:
-            raise serializers.ValidationError("ozune mesaj gondermek olmaz")
+            raise serializers.ValidationError("You cannot send a message to yourself")
         if sender.role == 'customer' and recipient.role != 'admin':
-            raise serializers.ValidationError("musteriler yalnis admine mesaj gondere biler")
+            raise serializers.ValidationError("Customers can only send messages to admins")
         if sender.role == 'admin' and recipient.role != 'customer':
-            raise serializers.ValidationError("adminler yalniz musterilere mesaj gondere biler")
-        return data    
+            raise serializers.ValidationError("Admins can only send messages to customers")
+        return data
