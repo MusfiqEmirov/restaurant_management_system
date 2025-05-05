@@ -20,6 +20,7 @@ from project_apps.accounts.serializers import (UserSerializer,
 
 logger = logging.getLogger(__name__)
 
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]  # public, hər kəs qeydiyyatdan keçə bilər
 
@@ -81,7 +82,9 @@ def post(self, request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as e:
             logger.error(f"profil yaratma xetasi: {str(e)}", exc_info=True)
-            return Response({'error': 'profil yaratma zamani xeta bas verdi'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'profil yaratma zamani xeta bas verdi'},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                            )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -97,7 +100,9 @@ class ProfileDetailAPIView(APIView):
         profile = get_object_or_404(Profile, id=id, is_deleted=False)
         user = request.user
         if user.role != 'admin' and profile.user != user:
-            return Response({'error': 'bu profile baxmag icazeniz yoxdur'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'bu profile baxmag icazeniz yoxdur'},
+                            status=status.HTTP_403_FORBIDDEN
+                            )
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -111,8 +116,13 @@ class ProfileDetailAPIView(APIView):
         profile = get_object_or_404(Profile, id=id, is_deleted=False)
         user = request.user
         if user.role != 'admin' and profile.user != user:
-            return Response({'error': 'bu profiliyenilemk icazeniz yoxdur'}, status=status.HTTP_403_FORBIDDEN)
-        serializer = ProfileSerializer(profile, data=request.data, partial=True, context={'request': request})
+            return Response({'error': 'bu profiliyenilemk icazeniz yoxdur'},
+                            status=status.HTTP_403_FORBIDDEN
+                            )
+        serializer = ProfileSerializer(profile, data=request.data,
+                                       partial=True,
+                                       context={'request': request}
+                                       )
         if serializer.is_valid():
             try:
                 serializer.save()
@@ -120,7 +130,9 @@ class ProfileDetailAPIView(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Exception as e:
                 logger.error(f"profil yenileme xetasi: {str(e)}", exc_info=True)
-                return Response({'error': 'profil yenileme xetasi'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': 'profil yenileme xetasi'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                                )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @transaction.atomic
@@ -172,7 +184,9 @@ class LoginView(APIView):
                 }, status=status.HTTP_200_OK)
             except Exception as e:
                 logger.error(f"login xetasi {str(e)}", exc_info=True)
-                return Response({'error': 'giris zamani xeta bas verdi'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({'error': 'giris zamani xeta bas verdi'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                                )
         logger.error(f"Serializer xetasi: {serializer.errors}")
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -189,17 +203,21 @@ class LogoutView(APIView):
             refresh_token = request.data.get("refresh")
             if not refresh_token:
                 logger.error("Refresh token daxil edilməyib.")
-                return Response({"error": "Refresh token tələb olunur."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"error": "Refresh token tələb olunur."},
+                                status=status.HTTP_400_BAD_REQUEST
+                                )
             
             token = RefreshToken(refresh_token)
             token.blacklist()
             logger.info(f"User çıxış etdi: {request.user.email}")
-            return Response({"message": "ugurla cixis olundu"}, status=status.HTTP_205_RESET_CONTENT)
+            return Response({"message": "ugurla cixis olundu"},
+                            status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             logger.error(f"Logout xətası: {str(e)}", exc_info=True)
-            return Response({"error": f"Çıxış zamanı xəta baş verdi: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": f"Çıxış zamanı xəta baş verdi: {str(e)}"},
+                            status=status.HTTP_400_BAD_REQUEST
+                            )
 
-        
 class AdminUserCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -211,7 +229,9 @@ class AdminUserCreateView(APIView):
         email signals ile mesaj gedir
         """
         if request.user.role != "admin":
-            return Response({"error": "yalniz adminler user yarada biler"}, status=status.HTTP_403_FORBIDDEN)
+            return Response({"error": "yalniz adminler user yarada biler"},
+                            status=status.HTTP_403_FORBIDDEN
+                            )
         
         serializer = AdminUserCreateSerializer(data=request.data)
         if serializer.is_valid():

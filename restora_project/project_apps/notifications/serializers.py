@@ -4,10 +4,13 @@ from .models import (Notification,
                      DiscountCode,
                      BonusPoints,
                      AdminCode,
-                     Message
+                     Message,
+                     
                      )
 from project_apps.accounts.serializers import UserSerializer
 from project_apps.accounts.models import User
+from project_apps.orders.models import Order, OrderItem
+from project_apps.orders.serializers import OrderItemSerializer,OrderSerializer
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -50,11 +53,6 @@ class NotificationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("mesaj bow ola bilmez")
         return value
     
-    def validate_sent_at(self, value):
-        if value is None and self.instance is None:
-            raise serializers.ValidationError("gonderilme tarixi qeyd edilmeldiir ")
-        return value
-
 
 class DiscountCodeSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -64,6 +62,13 @@ class DiscountCodeSerializer(serializers.ModelSerializer):
         write_only=True
     )
     notification = NotificationSerializer(read_only=True)
+    notification_id = serializers.PrimaryKeyRelatedField(
+        queryset=Notification.objects.filter(is_deleted=False),
+        source="notification",
+        write_only=True,
+        required=False,
+        allow_null=True
+    )
 
     class Meta:
         model = DiscountCode
@@ -96,6 +101,16 @@ class DiscountCodeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("bu kod bir defe istifade olunub tekrar istifad eeleemk olmaz")
         return value
     
+    def validate(self, data):
+        user = data.get("user")
+        notification = data.get("notification")
+        if notification and notification.title == "İlk Sifarişə 70% Endirim":
+            if Order.objects.filter(user=user, is_deleted=False).exists():
+                raise serializers.ValidationError(
+                    "70% endirim kodu yalnız ilk sifariş üçün keçərlidir."
+                )
+        return data
+    
     
 class BonusPointsSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -103,6 +118,14 @@ class BonusPointsSerializer(serializers.ModelSerializer):
         queryset=User.objects.filter(is_deleted=False, role='customer'),
         source="user",
         write_only=True
+    )
+    order = OrderSerializer(read_only=True)
+    order_id = serializers.PrimaryKeyRelatedField(
+        queryset=Order.objects.filter(is_deleted=False),
+        source="order",
+        write_only=True,
+        required=False,
+        allow_null=True
     )
 
     class Meta:

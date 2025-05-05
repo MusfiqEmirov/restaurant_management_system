@@ -51,36 +51,41 @@ class MessageCreateView(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         except Exception as e:
             logger.error(f"mesaj siyahisi alinaerken xeta bas verdi:{str(e)}", exc_info=True)
-            return Response({"error:" "mesaj siyahisi alinarken xeta bas verdi"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"error:" "mesaj siyahisi alinarken xeta bas verdi"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                            )
         
+    def delete(self, request, message_id=None):
+            """
+            mesajin silinmesi
+            musyteri yalniz oz mesajini sile biler
+        admin her kesin mesajini sile biler
+            """
+            logger.debug(f"mesaj silme sorgusu alindi {request.user.email}, Mesaj ID: {message_id}")
+            if not message_id:
+                logger.error("mesaj id daxil edilmeyib.")
+                return Response({'error': 'mesaj  id teleb olunur'}, status=status.HTTP_400_BAD_REQUEST)
 
-def delete(self, request, message_id=None):
-        """
-        mesajin silinmesi
-        musyteri yalniz oz mesajini sile biler
-       admin her kesin mesajini sile biler
-        """
-        logger.debug(f"mesaj silme sorgusu alindi {request.user.email}, Mesaj ID: {message_id}")
-        if not message_id:
-            logger.error("mesaj id daxil edilmeyib.")
-            return Response({'error': 'mesaj  id teleb olunur'}, status=status.HTTP_400_BAD_REQUEST)
+            try:
+                message = Message.objects.filter(id=message_id, is_deleted=False).first()
+                if not message:
+                    logger.error(f"mesaj tapilmadi ID {message_id}")
+                    return Response({'error': 'mesaj tapilmadi'}, status=status.HTTP_404_NOT_FOUND)
 
-        try:
-            message = Message.objects.filter(id=message_id, is_deleted=False).first()
-            if not message:
-                logger.error(f"mesaj tapilmadi ID {message_id}")
-                return Response({'error': 'mesaj tapilmadi'}, status=status.HTTP_404_NOT_FOUND)
+                user = request.user
+                if user.role == 'customer' and message.sender != user:
+                    logger.error(f"mesaji icazesiz silme cehdi {user.email}, Mesaj ID: {message_id}")
+                    return Response({'error': 'yalniz oz mesajlariniiz sile bilkersiz.'},
+                                    status=status.HTTP_403_FORBIDDEN
+                                    )
 
-            user = request.user
-            if user.role == 'customer' and message.sender != user:
-                logger.error(f"mesaji icazesiz silme cehdi {user.email}, Mesaj ID: {message_id}")
-                return Response({'error': 'yalniz oz mesajlariniiz sile bilkersiz.'}, status=status.HTTP_403_FORBIDDEN)
-
-            # admin he rkesin mesajini sile biler
-            message.is_deleted = True
-            message.save()
-            logger.info(f"Mesaj silindi: {user.email}, Mesaj ID: {message_id}")
-            return Response({'message': 'Mesaj ugurla silindi.'}, status=status.HTTP_200_OK)
-        except Exception as e:
-            logger.error(f"Mesaji silerken xeta: {str(e)}", exc_info=True)
-            return Response({'error': 'mesaj silerkne xeta bas verdi.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                # admin he rkesin mesajini sile biler
+                message.is_deleted = True
+                message.save()
+                logger.info(f"Mesaj silindi: {user.email}, Mesaj ID: {message_id}")
+                return Response({'message': 'Mesaj ugurla silindi.'}, status=status.HTTP_200_OK)
+            except Exception as e:
+                logger.error(f"Mesaji silerken xeta: {str(e)}", exc_info=True)
+                return Response({'error': 'mesaj silerkne xeta bas verdi.'},
+                                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                                )

@@ -189,6 +189,7 @@ class OrderView(APIView):
                 status=status.HTTP_200_OK,
             )
 
+
 class OrderItemView(APIView):
     # sifaris elementlerinin siyahisi yenilenmesi silinmesi ve yaranamsi
 
@@ -328,6 +329,7 @@ class OrderItemView(APIView):
                 {"message": "sifaris elementleri soft silindi"},
                 status=status.HTTP_200_OK,
             )
+
 
 class SalesReportView(APIView):
     # satis hesabatlarina baxmag ve filter elemek

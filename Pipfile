@@ -18,6 +18,7 @@ gunicorn = "*"
 django-celery-beat = "==2.7.0"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
