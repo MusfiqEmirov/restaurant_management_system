@@ -54,7 +54,7 @@ A comprehensive restaurant management system built with Django and Docker, featu
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/restaurant_management_system.git
+git clone https://github.com/MusfiqEmirov/restaurant_management_system.git
 cd restaurant_management_system
 ```
 
