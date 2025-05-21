@@ -1,0 +1,152 @@
+2025-05-05 23:55:48,159 - api.menu_bridge_core.views - INFO - Menu item list returned: count: 1
+2025-05-05 23:55:48,209 - api.menu_bridge_core.views - ERROR - Error while retrieving item list: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+Traceback (most recent call last):
+  File "/app/restora_project/api/menu_bridge_core/views.py", line 136, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 527, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 109, in get_attribute
+    instance = instance()
+               ^^^^^^^^^^
+  File "/app/restora_project/project_apps/menu/models.py", line 46, in get_discounted_price
+    return self.price * (1 - self.discount_percentage / 100)
+           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+2025-05-05 23:56:39,850 - api.menu_bridge_core.views - INFO - Menu item list returned: count: 1
+2025-05-05 23:56:39,866 - api.menu_bridge_core.views - ERROR - Error while retrieving item list: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+Traceback (most recent call last):
+  File "/app/restora_project/api/menu_bridge_core/views.py", line 136, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 527, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 109, in get_attribute
+    instance = instance()
+               ^^^^^^^^^^
+  File "/app/restora_project/project_apps/menu/models.py", line 46, in get_discounted_price
+    return self.price * (1 - self.discount_percentage / 100)
+           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+2025-05-05 23:56:43,076 - api.menu_bridge_core.views - INFO - Menu item list returned: count: 1
+2025-05-05 23:56:43,085 - api.menu_bridge_core.views - ERROR - Error while retrieving item list: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+Traceback (most recent call last):
+  File "/app/restora_project/api/menu_bridge_core/views.py", line 136, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 527, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 109, in get_attribute
+    instance = instance()
+               ^^^^^^^^^^
+  File "/app/restora_project/project_apps/menu/models.py", line 46, in get_discounted_price
+    return self.price * (1 - self.discount_percentage / 100)
+           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+2025-05-05 23:57:17,715 - api.menu_bridge_core.views - INFO - Category list returned: count: 1
+2025-05-05 23:57:30,613 - api.menu_bridge_core.views - INFO - Category details found: ID 1
+2025-05-06 00:05:58,786 - api.menu_bridge_core.views - INFO - Category list returned: count: 1
+2025-05-06 00:06:13,999 - api.menu_bridge_core.views - ERROR - Category ID not provided
+2025-05-06 00:06:35,687 - api.menu_bridge_core.views - INFO - Menu item list returned: count: 1
+2025-05-06 00:06:35,726 - api.menu_bridge_core.views - ERROR - Error while retrieving item list: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+Traceback (most recent call last):
+  File "/app/restora_project/api/menu_bridge_core/views.py", line 136, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 527, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/fields.py", line 109, in get_attribute
+    instance = instance()
+               ^^^^^^^^^^
+  File "/app/restora_project/project_apps/menu/models.py", line 46, in get_discounted_price
+    return self.price * (1 - self.discount_percentage / 100)
+           ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for *: 'decimal.Decimal' and 'float'
+2025-05-06 00:11:46,738 - api.menu_bridge_core.views - INFO - Menu item list returned: count: 1
+2025-05-06 00:11:46,747 - api.menu_bridge_core.views - ERROR - Error while retrieving item list: The field 'image_url' was declared on serializer MenuItemSerializer, but has not been included in the 'fields' option.
+Traceback (most recent call last):
+  File "/app/restora_project/api/menu_bridge_core/views.py", line 136, in get
+    return Response(serializer.data, status=status.HTTP_200_OK)
+                    ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 797, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 251, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 716, in to_representation
+    self.child.to_representation(item) for item in iterable
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    for field in fields:
+                 ^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 386, in _readable_fields
+    for field in self.fields.values():
+                 ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/django/utils/functional.py", line 47, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+                                         ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 374, in fields
+    for key, value in self.get_fields().items():
+                      ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 1081, in get_fields
+    field_names = self.get_field_names(declared_fields, info)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/rest_framework/serializers.py", line 1177, in get_field_names
+    assert field_name in fields, (
+           ^^^^^^^^^^^^^^^^^^^^
+AssertionError: The field 'image_url' was declared on serializer MenuItemSerializer, but has not been included in the 'fields' option.
+2025-05-06 20:12:49,004 - api.menu_bridge_core.views - ERROR - Unauthorized menu item modification: Guest, ID: 1
+2025-05-06 20:13:23,713 - api.menu_bridge_core.views - ERROR - Menu item ID not provided

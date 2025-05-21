@@ -101,11 +101,11 @@ The project uses multiple Docker services:
 ## 🔧 Development
 
 ### Accessing Services
-- Main application: http://localhost:8000
-- Admin interface: http://localhost:8000/admin
-- API documentation: http://localhost:8000/api/docs/
-- Swagger UI: http://localhost:8000/api/schema/swagger-ui/
-- ReDoc: http://localhost:8000/api/schema/redoc/
+- Main application: http://pi.backend.az/restaurant
+- Admin interface: http://pi.backend.az/restaurant/admin
+- API documentation: http://pi.backend.az/restaurant/api/v1/docs/
+- Swagger UI: http://pi.backend.az/restaurant/api/v1/schema/swagger-ui/
+- ReDoc: http://pi.backend.az/restaurant/api/v1/schema/redoc/
 
 ### Common Commands
 
@@ -135,8 +135,12 @@ docker-compose down
 ## 📚 API Documentation
 
 The API is documented using Swagger/OpenAPI. Access the documentation at:
-- Swagger UI: http://localhost:8000/api/schema/swagger-ui/
-- ReDoc: http://localhost:8000/api/schema/redoc/
+- Swagger UI: http://pi.backend.az/api/v1/schema/swagger-ui/
+- ReDoc: http://pi.backend.az/api/v1/schema/redoc/
+
+# If the domain is not working and you want to access directly by IP:
+- Swagger UI (IP ilə): http://85.132.18.12/api/v1/schema/swagger-ui/
+- ReDoc (IP ilə): http://85.132.18.12/api/v1/schema/redoc/
 
 ### API Features
 - JWT Authentication

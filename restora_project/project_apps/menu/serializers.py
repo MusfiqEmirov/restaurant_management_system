@@ -49,6 +49,10 @@ class MenuItemSerializer(serializers.ModelSerializer):
         source="get_discounted_price"
     )
     
+    # Yeni təhlükəsiz sahələr
+    image_url = serializers.SerializerMethodField()
+    thumbnail_url = serializers.SerializerMethodField() 
+    
     class Meta:
         model = MenuItem
         fields = [

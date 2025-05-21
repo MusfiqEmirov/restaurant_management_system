@@ -9,6 +9,7 @@ from project_apps.core.logging import get_logger
 
 logger = get_logger(__name__)
 
+
 class StaffView(APIView):
     
     def get(self, request, staff_id=None):
