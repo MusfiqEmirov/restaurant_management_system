@@ -19,6 +19,7 @@ django-celery-beat = "==2.7.0"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 drf-spectacular = "*"
+django-url-filter = "*"
 
 [dev-packages]
 
