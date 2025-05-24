@@ -23,7 +23,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'pi.backend.az',
     '85.132.18.12',
-    
+    'web',
 ]
 
 
