@@ -11,13 +11,13 @@ from .views import (RegisterView,
                     )
 
 urlpatterns = [
-    path('accounts/register/', RegisterView.as_view(), name='register'),
-    path('accounts/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-    path('accounts/login/', LoginView.as_view(), name='login'),
-    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
-    path('accounts/admin/users/', AdminUserCreateView.as_view(), name='admin_user_create'),
-    path('accounts/profiles/', ProfileAPIView.as_view(), name='profile_list'),
-    path('accounts/profiles/<int:id>/', ProfileDetailAPIView.as_view(), name='profile_detail'),
+    path('admin/users/', AdminUserCreateView.as_view(), name='admin_user_create'),
+    path('profiles/', ProfileAPIView.as_view(), name='profile_list'),
+    path('profiles/<int:id>/', ProfileDetailAPIView.as_view(), name='profile_detail'),
 ]

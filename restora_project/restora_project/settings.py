@@ -9,9 +9,11 @@ logger = logging.getLogger(__name__)
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
+
+
 # .env faylının yükləndiyini yoxlamaq üçün
-logger.info(f"DEBUG value from .env: {os.getenv('DEBUG')}")
-logger.info(f"ALLOWED_HOSTS: {['localhost', '127.0.0.1', '85.132.18.12', 'pi.backend.az']}")
+print(f"DEBUG value from .env: {os.getenv('DEBUG')}")
+print(f"ALLOWED_HOSTS: {['localhost', '127.0.0.1', 'pi.backend.az']}")
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-key')
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
@@ -19,14 +21,16 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '85.132.18.12',
     'pi.backend.az',
+    '85.132.18.12',
+    
 ]
+
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = False  # HTTPS səhvlərini test etmək üçün müvəqqəti deaktiv
+SECURE_SSL_REDIRECT = False
 USE_X_FORWARDED_HOST = True
 APPEND_SLASH = True
 
@@ -132,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = "Asia/Baku"
+TIME_ZONE = 'Asia/Baku'
 USE_I18N = True
 USE_TZ = True
 
@@ -215,7 +219,7 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        '': {  # Root logger
+        '': {
             'handlers': ['console', 'file'],
             'level': 'DEBUG',
             'propagate': True,
