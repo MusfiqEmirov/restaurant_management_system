@@ -11,6 +11,13 @@ urlpatterns = [
     path('restaurant/api/v1/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('restaurant/api/v1/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
     path('restaurant/api/v1/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+
+    path('accounts/', include('api.accounts_bridge_core.urls')),
+    path('notifications/', include('api.notifications_bridge_core.urls')),
+    path('menu/', include('api.menu_bridge_core.urls')),
+    path('orders/', include('api.orders_bridge_core.urls')),
+    path('staff/', include('api.staff_bridge_core.urls')),
+    path('customers/', include('api.customers_bridge_core.urls')),
 ]
 
 if settings.DEBUG:
